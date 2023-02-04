@@ -8,3 +8,17 @@ Route::get('/', function () {
 
   return view('travel_list', ['visited' => $visited, 'togo' => $togo ] );
 });
+
+Route::get('/welcome', function() {
+  return view('welcome');
+});
+
+Route::get('/user/{name?}',function($name = 'Virat Gandhi'){
+  echo "Name: ".$name;
+  });
+
+
+  // Must be at the end 
+Route::fallback(function () {
+    echo "Oh, not valid route!";
+  });
