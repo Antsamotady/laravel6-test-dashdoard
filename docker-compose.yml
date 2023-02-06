@@ -14,7 +14,7 @@ services:
     volumes:
       - ./:/var/www
     networks:
-      - travellist
+      - nginx-proxy
 
   db:
     image: mysql:8.0
@@ -30,7 +30,7 @@ services:
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
     networks:
-      - travellist
+      - nginx-proxy
 
   nginx:
     image: nginx:1.17-alpine
@@ -42,14 +42,10 @@ services:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
-      - travellist
-
-
-
-
+      - nginx-proxy
 
 networks:
-  travellist:
-    driver: bridge
-
+    nginx-proxy:
+        external:
+            name: nginx-proxy
   
