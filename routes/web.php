@@ -15,10 +15,15 @@ Route::get('/welcome', function() {
 
 Route::get('/user/{name?}',function($name = 'Virat Gandhi'){
   echo "Name: ".$name;
-  });
+  })->name('anarana');
 
 
-  // Must be at the end 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Must be at the end 
 Route::fallback(function () {
-    echo "Oh, not valid route!";
-  });
+  echo "Oh, not valid route!";
+});
