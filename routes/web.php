@@ -7,9 +7,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Formulaire de contact
-Route::get('/contact', 'ContactsController@create')->name('contact.create');
-Route::post('/contact', 'ContactsController@store')->name('contact.store');
+Route::get('/search','SearchController@search');
 
 
 // Must be at the end 
