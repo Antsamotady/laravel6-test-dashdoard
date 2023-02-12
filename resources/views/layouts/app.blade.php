@@ -34,13 +34,9 @@
             </div>
         @endauth
   
-        <div class="login">
-            <div class="bg-right"></div>
-            <div class="bg-left"></div>
-            <div class="login-form">
-                @yield('login-form')
-            </div>
-        </div>
+        
+                @yield('content')
+           
     </div>
 </body>
 </html>
