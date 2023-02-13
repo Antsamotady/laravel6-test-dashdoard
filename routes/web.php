@@ -7,6 +7,7 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@store')->name('user.store');
+Route::get('/home/delete/{id}', 'HomeController@destroy')->name('user.destroy');
 
 Route::get('/search','SearchController@search');
 

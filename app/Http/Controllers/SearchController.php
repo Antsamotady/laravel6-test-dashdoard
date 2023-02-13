@@ -44,7 +44,7 @@ class SearchController extends Controller
                         $status = '<input type="checkbox" data-toggle="toggle" data-onstyle="outline-warning" data-offstyle="outline-success"><span class="text-warning ml-2">INACTIF</span>';
 
                     if(!$user->superuser)
-                        $delButton = '<button type="submit" class="btn btn-warning col-12" id="delUser">Supprimer</button>';
+                        $delButton = '<button type="submit" class="btn btn-warning col-12 delUser" id="'.$user->id.'">Supprimer</button>';
                     else
                         $delButton = '';
 

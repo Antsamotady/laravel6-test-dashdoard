@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -49,6 +50,17 @@ class HomeController extends Controller
         $user->password = $request->password;
 
         $user->save();
+
+        return view('home');
+    }
+
+    /**
+     * Store new user.
+     */
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
 
         return view('home');
     }

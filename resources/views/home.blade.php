@@ -143,6 +143,7 @@
         </div>
     </div>
 
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -203,8 +204,6 @@
         $('#modalID').fadeIn();
     });
 
-
-
     $(document).on('click', '.dropdown-item', function(){
         var selectedValue = $(this).attr("id");
         var inputF = document.getElementById("inlineFormInputGroup");
@@ -227,17 +226,19 @@
         });
     });
 
-    $(document).on('click', '#addUser', function(){
-        console.log('wanna Add?');
-    });
-
     $(document).on('click', '#editUser', function(){
         console.log('wanna Edit?');
     });
 
-    $(document).on('click', '#delUser', function(){
-        console.log('wanna Delete?');
-    });
+    $(document).on('click', '.delUser', function(){
+        event.preventDefault();
+        var id = $(this).attr('id');
+
+        url = "{{ route('user.destroy', '------')}}";
+        url = url.replace("------", id);
+
+        window.location = url;
+    }); 
 
 </script>
 @endsection
