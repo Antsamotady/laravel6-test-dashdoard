@@ -23,20 +23,43 @@
 <body>
     <div id="app">
         @auth
-            <div class="logout">
-                <a class="dropdown-item" href="{{ route('logout') }}"
+        <ul class="nav justify-content-between mb-2 bg-white">
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">LOGO</a>
+            </li>
+            <li class="nav-item">
+                <a class="dropdown-item mr-sm-2" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                    <span>{{ __('Déconnexion') }}</span>
+                    <span class="material-icons md-18">exit_to_app</span>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                 @csrf
                 </form>
-            </div>
+            </li>
+        </ul>
         @endauth
   
         @yield('content')
-           
+
+        <script type="text/javascript">
+            var name = "";
+            var status = "";
+
+            window.onload = function() {
+                $.ajax({
+                    type : 'get',
+                    url : '{{URL::to('search')}}',
+                    data:{'name':name, 'status':status},
+                    success:function(data){
+                        $('.user-list').html(data);
+                    }
+
+                });
+            }
+        </script>
+
     </div>
 </body>
 </html>
