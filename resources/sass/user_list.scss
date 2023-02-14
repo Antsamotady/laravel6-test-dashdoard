@@ -1,0 +1,36 @@
+//list
+#rechercher {
+  width: 250px;
+}
+
+//user modal
+.modal-user .modal-dialog {
+  width: 45%;
+  max-width: 800px;
+}
+
+.custom-input-file {
+  position: relative;
+  background-color: #337ab7;
+  padding: 2rem;
+  border-radius: 3px;
+  color: #ffffff;
+
+  input[type="file"] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      z-index: 999999;
+  }
+}
+
+#avatar-image {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  border: solid #f0f1f6;
+  border-width: 5px;
+}

@@ -41,6 +41,8 @@ class HomeController extends Controller
             'mobile' => 'bail|required|numeric'
         ]);
         
+        // msg info wether ok or error
+
         $user = new \App\User;
         $user->name = $request->name;
         $user->surname = $request->surname;
@@ -55,7 +57,35 @@ class HomeController extends Controller
     }
 
     /**
-     * Store new user.
+     * Update user.
+     */
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'bail|required|between:5,20|alpha',
+            'surname' => 'bail|required|between:5,20|alpha',
+            'email' => 'bail|required|email',
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => 'bail|required|numeric',
+            'mobile' => 'bail|required|numeric'
+        ]);
+        
+        $user = \App\User::where('id', $id)->firstOrFail();
+
+        $user->name = $request->name;
+        $user->surname = $request->surname;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->mobile = $request->mobile;
+        // $user->password = $request->password;
+
+        $user->save();
+
+        return view('home');
+    }
+
+    /**
+     * Remove user.
      */
     public function destroy($id)
     {

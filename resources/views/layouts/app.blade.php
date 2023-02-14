@@ -28,10 +28,10 @@
                 <a class="nav-link disabled" href="#">LOGO</a>
             </li>
             <li class="nav-item">
-                <a class="dropdown-item mr-sm-2" href="{{ route('logout') }}"
+                <a class="dropdown-item mr-sm-2 d-flex align-items-center" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                    <span>{{ __('Déconnexion') }}</span>
+                    <span>{{ __('Déconnexion') }}&nbsp;</span>
                     <span class="material-icons md-18">exit_to_app</span>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
@@ -15,6 +16,8 @@ class SearchController extends Controller
 
     public function search(Request $request)
     {
+        $loggeduser = Auth::user();
+
         if($request->ajax()) {
             $output="";
 
@@ -43,8 +46,8 @@ class SearchController extends Controller
                     else
                         $status = '<input type="checkbox" data-toggle="toggle" data-onstyle="outline-warning" data-offstyle="outline-success"><span class="text-warning ml-2">INACTIF</span>';
 
-                    if(!$user->superuser)
-                        $delButton = '<button type="submit" class="btn btn-warning col-12 delUser" id="'.$user->id.'">Supprimer</button>';
+                    if($user->password != $loggeduser->getAuthPassword())
+                        $delButton = '<button data-toggle="modal" data-backdrop="static" data-target="#modalConfirmDel" type="submit" class="btn btn-warning col-12 delUser" id="'.$user->id.'">Supprimer</button>';
                     else
                         $delButton = '';
 
@@ -58,12 +61,18 @@ class SearchController extends Controller
                                         '<div class="col-12">Date de création du compte : '.$createDate.'</div>'.
                                     '</div>'.
                                     '<div class="col-3">'.
-                                        '<div class="col-12 text-primary"><span class="material-icons md-18">mail</span>'.$user->email.'</div>'.
-                                        '<div class="col-12"><span class="material-icons md-18">phone</span>'.$user->phone.'</div>'.
-                                        '<div class="col-12"><span class="material-icons md-18">smartphone</span>'.$user->mobile.'</div>'.
+                                        '<div class="col-12 text-primary d-flex align-items-center"><span class="material-icons md-18">mail</span>&nbsp;'.$user->email.'</div>'.
+                                        '<div class="col-12 d-flex align-items-center"><span class="material-icons md-18">phone</span>&nbsp;'.$user->phone.'</div>'.
+                                        '<div class="col-12 d-flex align-items-center"><span class="material-icons md-18">smartphone</span>&nbsp;'.$user->mobile.'</div>'.
                                     '</div>'.
                                     '<div class="col-2">'.
-                                        '<button type="submit" class="btn btn-primary mb-4 col-12" id="editUser">Editer</button>'.
+                                        '<button data-toggle="modal" data-backdrop="static" data-target="#modalEditUser" type="submit" class="btn btn-primary mb-4 col-12 editUser" id="'.
+                                            $user->id.'" nom="'.
+                                            $user->name.'" surname="'.
+                                            $user->surname.'" phone="'.
+                                            $user->phone.'" mobile="'.
+                                            $user->mobile.'" email="'.
+                                            $user->email.'">Editer</button>'.
                                         $delButton.
                                     '</div>'.
                                 '</form>'.
