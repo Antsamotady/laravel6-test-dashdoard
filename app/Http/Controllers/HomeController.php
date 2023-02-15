@@ -72,7 +72,7 @@ class HomeController extends Controller
 
         $user->save();
 
-        return view('home', ['user' => Auth::user()]);
+        return redirect('/')->with('success', 'Nouvel utilisateur bien enregistré.');
     }
 
     /**
@@ -80,27 +80,42 @@ class HomeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
+            'civilite' => 'bail|required',
             'name' => 'bail|required|between:5,20|alpha',
             'surname' => 'bail|required|between:5,20|alpha',
             'email' => 'bail|required|email',
-            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => 'bail|required|numeric',
-            'mobile' => 'bail|required|numeric'
+            'mobile' => 'bail|required|numeric',
+            'avatar-input' => 'file|mimes:jpg,png,gif'
         ]);
-        
+
+        if ($validator->fails()) {
+            return redirect('/home')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if ($request->hasFile('avatar-edit-input')) {
+            $image = $request->file('avatar-edit-input');
+            $filename = $image->getClientOriginalName();
+            $destinationPath = public_path().'/images' ;
+            $image->move($destinationPath, $filename);
+        }
+
         $user = \App\User::where('id', $id)->firstOrFail();
 
+        $user->image = $request->input('avatar-hidden-edit-input');
+        $user->civilite = $request->civilite;
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->mobile = $request->mobile;
-        // $user->password = $request->password;
-
+        
         $user->save();
-
-        return view('home', ['user' => Auth::user()]);
+        
+        return redirect('/')->with('success', 'Mise à jour réussi.');
     }
 
     /**

@@ -14,6 +14,12 @@
             </div>
         </button>
     </div>
+    @if(session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session()->get('success') }}
+        </div>
+    @endif
+
     @if($errors->any())
         <div class="alert alert-danger" role="alert">
             {!! implode('', $errors->all('<div>:message</div>')) !!}
@@ -31,7 +37,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="mediumBody">
-                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data" id="new-user-form">
+                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-4 d-flex flex-column align-items-center">
@@ -180,15 +186,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="editUserForm">
-                    {{ method_field('PUT') }}
+                <form method="POST" id="editUserForm" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-4 d-flex flex-column align-items-center">
-                            <img id="avatar-image-form" src="" alt="">
+                            <img id="avatar-image-edit-form" src="" alt="">
                             <div class="custom-input-file mt-4">
                                 <p>Choisir une photo</p>
-                                <input type="file" id="avatar-input">
+                                <input type="file" id="avatar-edit-input" name="avatar-edit-input">
+                                <input type="hidden" id="avatar-hidden-edit-input" name="avatar-hidden-edit-input">
                             </div>
                             <div class="img-type-note mt-2">
                                 <button type="button" class="btn btn-outline-danger btn-sm text-danger" disabled>NOTE!</button>
@@ -202,16 +208,16 @@
                             <div class="row">
                                 <div class="col-2">
                                     <div class="form-group">
-                                        <label for="form009">Civilité<span class="material-icons md-14 text-danger">lock</span></label>
+                                        <label for="edit-civilite-input">Civilité<span class="material-icons md-14 text-danger">lock</span></label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="form009" placeholder="">
+                                            <input type="text" class="form-control" id="edit-civilite-input" placeholder="" name="civilite">
                                             <div class="dropdown input-group-append">
                                                 <button class="btn btn-secondary bg-warning dropdown-toggle border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#" id="Tous">Mlle</a>
-                                                    <a class="dropdown-item" href="#" id="Actif">Me</a>
-                                                    <a class="dropdown-item" href="#" id="Inactif">Mr</a>
+                                                    <a class="dropdown-item dropdown-item-edit-civilite" href="#" id="Mlle">Mlle</a>
+                                                    <a class="dropdown-item dropdown-item-edit-civilite" href="#" id="Me">Me</a>
+                                                    <a class="dropdown-item dropdown-item-edit-civilite" href="#" id="Mr">Mr</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -396,6 +402,11 @@
         $('#civilite-input').val(clickedItemValue);
     });
 
+    $('.dropdown-item-edit-civilite').click(function(event) {
+        let clickedItemValue = $(event.target).text();
+        $('#edit-civilite-input').val(clickedItemValue);
+    });
+
     $('.dropdown-item-status').click(function(event) {
         let clickedItemValue = $(event.target).text();
         $('#inlineFormInputGroup').val(clickedItemValue);
@@ -448,6 +459,8 @@
     $(document).on('click', '.editUser', function(){
         event.preventDefault();
         var id = $(this).attr('id');
+        var civilite = $(this).attr('civilite');
+        var image = $(this).attr('avatar');
         var name = $(this).attr('nom');
         var surname = $(this).attr('surname');
         var phone = $(this).attr('phone');
@@ -455,25 +468,37 @@
         var email = $(this).attr('email');
 
         var inputName = document.getElementById("form010");
+        var inputCivilite = document.getElementById("edit-civilite-input");
         var inputSurname = document.getElementById("form029");
         var inputPhone = document.getElementById("form011");
         var inputMobile = document.getElementById("form012");
         var inputMail = document.getElementById("form013");
+        var inputImage = document.getElementById("avatar-hidden-edit-input");
 
         inputName.value = name;
+        inputCivilite.value = civilite;
         inputSurname.value = surname;
         inputPhone.value = phone;
         inputMobile.value = mobile;
         inputMail.value = email;
+        inputImage.value = image;
 
-        if ($('.changePass').attr('id') == id)
-            $('.changePass').addClass('d-none');
+        urlImg = 'images/'+ image;
+        imgTag = document.querySelectorAll('#avatar-image-edit-form');
+        imgTag[0].setAttribute('src', urlImg);
 
         urlEdit = "{{ route('user.update', '------')}}";
         urlEdit = urlEdit.replace("------", id);
 
         form = document.querySelectorAll('#editUserForm');
         form[0].setAttribute('action', urlEdit);
+        console.log($('.changePass').attr('id')+'--'+id);
+
+        if ($('.changePass').attr('id') == id)
+            $('.changePass').addClass('d-none');
+        else
+            $('.changePass').removeClass('d-none');
+
     });
 
     $(document).on('click', '.delUser', function(){
@@ -492,6 +517,10 @@
 
     $(document).on('change', '#avatar-input', function(){
         changeAvatar();
+    });
+
+    $(document).on('change', '#avatar-edit-input', function(){
+        editAvatar();
     });
 
     $(document).on('click', '.toggle-status', function(){
@@ -534,6 +563,8 @@
     function removeAvatar() {
           var image = document.getElementById("avatar-image-form");
           image.src = "";
+          var image = document.getElementById("avatar-image-edit-form");
+          image.src = "";
     }
 
     function changeAvatar() {
@@ -546,6 +577,19 @@
           var image = document.getElementById("avatar-image-form");
           image.src = reader.result;
           $('#avatar-hidden-input').attr('value', file.name);
+        };
+    }
+
+    function editAvatar() {
+        var input = document.getElementById("avatar-edit-input");
+        var file = input.files[0];
+
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function() {
+          var image = document.getElementById("avatar-image-edit-form");
+          image.src = reader.result;
+          $('#avatar-hidden-edit-input').attr('value', file.name);
         };
     }
 

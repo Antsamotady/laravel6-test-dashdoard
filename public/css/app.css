@@ -11115,8 +11115,8 @@ button.btn {
 }
 
 .modal-user .modal-dialog {
-  width: 45%;
-  max-width: 800px;
+  width: 46%;
+  max-width: 810px;
 }
 
 .custom-input-file {
@@ -11137,7 +11137,8 @@ button.btn {
   z-index: 999999;
 }
 
-#avatar-image-form {
+#avatar-image-form,
+#avatar-image-edit-form {
   border-radius: 50%;
   width: 200px;
   height: 200px;

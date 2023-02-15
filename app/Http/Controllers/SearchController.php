@@ -82,7 +82,9 @@ class SearchController extends Controller
                                     '</div>'.
                                     '<div class="col-2">'.
                                         '<button data-toggle="modal" data-backdrop="static" data-target="#modalEditUser" type="submit" class="btn btn-primary mb-4 col-12 editUser" id="'.
-                                            $user->id.'" nom="'.
+                                            $user->id.'" civilite="'.
+                                            $user->civilite.'" avatar="'.
+                                            $user->image.'" nom="'.
                                             $user->name.'" surname="'.
                                             $user->surname.'" phone="'.
                                             $user->phone.'" mobile="'.
