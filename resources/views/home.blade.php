@@ -14,6 +14,11 @@
             </div>
         </button>
     </div>
+    @if($errors->any())
+        <div class="alert alert-danger" role="alert">
+            {!! implode('', $errors->all('<div>:message</div>')) !!}
+        </div>
+    @endif
 
     <div class="modal modal-user fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
         aria-hidden="true">
@@ -26,30 +31,38 @@
                     </button>
                 </div>
                 <div class="modal-body" id="mediumBody">
-                    <form action="{{ route('user.store') }}" method="POST">
+                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data" id="new-user-form">
                         @csrf
                         <div class="row">
                             <div class="col-4 d-flex flex-column align-items-center">
-                                <img id="avatar-image" src="" alt="Avatar">
+                                <img id="avatar-image-form" src="" alt="">
                                 <div class="custom-input-file mt-4">
                                     <p>Choisir une photo</p>
-                                    <input type="file" id="avatar-input">
+                                    <input type="file" id="avatar-input" name="avatar-input">
+                                    <input type="hidden" id="avatar-hidden-input" name="avatar-hidden-input">
+                                </div>
+                                <div class="img-type-note mt-2">
+                                    <button type="button" class="btn btn-outline-danger btn-sm text-danger" disabled>NOTE!</button>
+                                    <span>Format: .jpg .png .gif</span>
+                                </div>
+                                <div class="mt-2" id="">
+                                    <button class="btn btn-danger" id="del-avatar-btn">Supprimer la photo</button>
                                 </div>
                             </div>
                             <div class="col-8">
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="form-group">
-                                            <label for="form002">Civilité<span class="material-icons md-14 text-danger">lock</span></label>
+                                            <label for="civilite-input">Civilité<span class="material-icons md-14 text-danger">lock</span></label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" id="form002" placeholder="">
+                                                <input type="text" class="form-control" id="civilite-input" placeholder="" name="civilite">
                                                 <div class="dropdown input-group-append">
                                                     <button class="btn btn-secondary bg-warning dropdown-toggle border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" href="#" id="Tous">Mlle</a>
-                                                        <a class="dropdown-item" href="#" id="Actif">Me</a>
-                                                        <a class="dropdown-item" href="#" id="Inactif">Mr</a>
+                                                        <a class="dropdown-item dropdown-item-civilite" href="#" id="Mlle">Mlle</a>
+                                                        <a class="dropdown-item dropdown-item-civilite" href="#" id="Me">Me</a>
+                                                        <a class="dropdown-item dropdown-item-civilite" href="#" id="Mr">Mr</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,8 +184,19 @@
                     {{ method_field('PUT') }}
                     @csrf
                     <div class="row">
-                        <div class="col-4">
-                            IMAGE et boutons
+                        <div class="col-4 d-flex flex-column align-items-center">
+                            <img id="avatar-image-form" src="" alt="">
+                            <div class="custom-input-file mt-4">
+                                <p>Choisir une photo</p>
+                                <input type="file" id="avatar-input">
+                            </div>
+                            <div class="img-type-note mt-2">
+                                <button type="button" class="btn btn-outline-danger btn-sm text-danger" disabled>NOTE!</button>
+                                <span>Format: .jpg .png .gif</span>
+                            </div>
+                            <div class="mt-2" id="">
+                                <button class="btn btn-danger" id="del-avatar-btn">Supprimer la photo</button>
+                            </div>
                         </div>
                         <div class="col-8">
                             <div class="row">
@@ -263,7 +287,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-6 changePass" id="{{ Auth::user()->id }}">
+                                            <div class="col-6 changePass" id="{{ $user->id }}">
                                                 <button class="btn btn-danger" data-action="{{ route('password.email') }}" id="changePassBtn">Changer de mot de passe</button>
                                             </div>
                                         </div>
@@ -331,16 +355,16 @@
                                     <button class="btn btn-secondary bg-warning dropdown-toggle border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#" id="Tous">Tous</a>
-                                        <a class="dropdown-item" href="#" id="Actif">Actif</a>
-                                        <a class="dropdown-item" href="#" id="Inactif">Inactif</a>
+                                        <a class="dropdown-item dropdown-item-status" href="#" id="Tous">Tous</a>
+                                        <a class="dropdown-item dropdown-item-status" href="#" id="Actif">Actif</a>
+                                        <a class="dropdown-item dropdown-item-status" href="#" id="Inactif">Inactif</a>
                                     </div>
                                 </span>
                             </div>
                         </div>
 
                         
-                        <button type="submit" class="btn btn-primary" id="rechercher">Rechercher</button>
+                        <button type="submit" class="btn btn-primary" id="search-btn">Rechercher</button>
                     </form>
                 </div>
             </div>
@@ -367,13 +391,17 @@
         $('#modalNewUser').fadeIn();
     });
 
-    $(document).on('click', '.dropdown-item', function(){
-        var selectedValue = $(this).attr("id");
-        var inputF = document.getElementById("inlineFormInputGroup");
-        inputF.value = selectedValue;
+    $('.dropdown-item-civilite').click(function(event) {
+        let clickedItemValue = $(event.target).text();
+        $('#civilite-input').val(clickedItemValue);
     });
 
-    $(document).on('click', '#rechercher', function(){
+    $('.dropdown-item-status').click(function(event) {
+        let clickedItemValue = $(event.target).text();
+        $('#inlineFormInputGroup').val(clickedItemValue);
+    });
+
+    $(document).on('click', '#search-btn', function(){
         event.preventDefault();
         var name = document.getElementById("inlineFormInputName").value;
         var status = document.getElementById("inlineFormInputGroup").value;
@@ -457,22 +485,67 @@
 
     });
 
-    $(document).on('change', '#avatar-input', function(){
-        changeAvatar()
+    $(document).on('click', '#del-avatar-btn', function(){
+        event.preventDefault();
+        removeAvatar();
     });
+
+    $(document).on('change', '#avatar-input', function(){
+        changeAvatar();
+    });
+
+    $(document).on('click', '.toggle-status', function(){
+        let url = $(this).data('action');
+
+        $.ajax({
+            method: 'POST',
+            url: url,
+            data: {},
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(data){
+                toggleCheckBox(data);
+            }
+        });
+        
+    });
+
+    function toggleCheckBox(data) {
+        var url = '/home/toggle/'+ data.id;
+        var currentId = 'toggle-status-btn-'+ data.id +'-'+ data.status;
+        var mySelector = '#'+ currentId;
+
+        console.log(currentId);
+
+        var actifChkBox = $('<button id="'+currentId+'" type="button" class="btn btn-success toggle-status" data-action="'+url+'">ACTIF</button>');
+        var inactifChkBox = $('<button id="'+currentId+'" type="button" class="btn btn-warning toggle-status" data-action="'+url+'">INACTIF</button>');
+
+        if(data.status == 'Actif')
+            $(mySelector).replaceWith(inactifChkBox);
+        else
+            $(mySelector).replaceWith(actifChkBox);
+    }
 
     function validate() {
         window.location = urlDelete;
     }
 
+    function removeAvatar() {
+          var image = document.getElementById("avatar-image-form");
+          image.src = "";
+    }
+
     function changeAvatar() {
         var input = document.getElementById("avatar-input");
         var file = input.files[0];
+
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function() {
-          var image = document.getElementById("avatar-image");
+          var image = document.getElementById("avatar-image-form");
           image.src = reader.result;
+          $('#avatar-hidden-input').attr('value', file.name);
         };
     }
 

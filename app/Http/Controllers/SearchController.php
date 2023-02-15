@@ -26,18 +26,19 @@ class SearchController extends Controller
                     ->where('name','LIKE','%'.$request->name.'%')
                     ->where('status','LIKE','%'.$request->status.'%')
                     ->get();
-            elseif($request->name && (is_null($request->status) || $request->status=='Tous'))
+            if($request->name && (is_null($request->status) || $request->status=='Tous'))
                 $users=DB::table('users')
                     ->where('name','LIKE','%'.$request->name.'%')
                     ->get();
-            elseif(is_null($request->name) && !is_null($request->status) && $request->status!='Tous')
+            if(is_null($request->name) && $request->status && $request->status!='Tous')
                 $users=DB::table('users')
                     ->where('status','LIKE','%'.$request->status.'%')
                     ->get();
-            else
+            if(is_null($request->name) && (is_null($request->status) || $request->status=='Tous'))
                 $users=DB::table('users')
                     ->get();
 
+            // var_dump($users->count());
             if($users){
                 foreach ($users as $key => $user) {
                     $createDate = str_replace('-', '/', substr($user->created_at, 0, -9));
@@ -51,19 +52,33 @@ class SearchController extends Controller
                     else
                         $delButton = '';
 
+                    if(!$user->image)
+                        if($user->civilite == 'Mr')
+                            $avatar = 'profil-homme.jpg';
+                        else $avatar = 'profil-femme.png';
+                    else
+                        $avatar = $user->image;
+
+
                     $output.='<div class="card mt-2">'.
                             '<div class="card-body">'.
                                 '<form class="row row-cols-lg-auto g-3">'.
-                                    '<div class="col-1">'.'IMAGE'.'</div>'.
+                                    '<div class="col-1"><img id="avatar-image-list" src="images/'.$avatar.'" alt="Avatar"></div>'.
                                     '<div class="col-2">'.$user->name.' '.$user->surname.'</div>'.
                                     '<div class="col-4">'.
-                                        '<div class="col-12">'.$status.'</div>'.
+                                        '<div class="col-12">'.
+                                        '<button class="btn btn-info toggle-status"'.
+                                            'id="toggle-status-btn-'.$user->id.'-'.$user->status.'" '.
+                                            'data-action="/home/toggle/'.$user->id.'">'.
+                                            'Toggle Status'.
+                                        '</button>
+                                        '.$status.'</div>'.
                                         '<div class="col-12">Date de création du compte : '.$createDate.'</div>'.
                                     '</div>'.
                                     '<div class="col-3">'.
-                                        '<div class="col-12 text-primary d-flex align-items-center"><span class="material-icons md-18">mail</span>&nbsp;'.$user->email.'</div>'.
-                                        '<div class="col-12 d-flex align-items-center"><span class="material-icons md-18">phone</span>&nbsp;'.$user->phone.'</div>'.
-                                        '<div class="col-12 d-flex align-items-center"><span class="material-icons md-18">smartphone</span>&nbsp;'.$user->mobile.'</div>'.
+                                        '<div class="col-12 text-primary d-flex align-items-center mb-2"><span class="material-icons md-18">mail</span>&nbsp;'.$user->email.'</div>'.
+                                        '<div class="col-12 d-flex align-items-center mb-2"><span class="material-icons md-18">phone</span>&nbsp;'.$user->phone.'</div>'.
+                                        '<div class="col-12 d-flex align-items-center mb-2"><span class="material-icons md-18">smartphone</span>&nbsp;'.$user->mobile.'</div>'.
                                     '</div>'.
                                     '<div class="col-2">'.
                                         '<button data-toggle="modal" data-backdrop="static" data-target="#modalEditUser" type="submit" class="btn btn-primary mb-4 col-12 editUser" id="'.

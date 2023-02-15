@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -24,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home', ['user' => Auth::user()]);
     }
 
     /**
@@ -32,28 +34,45 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
+            'civilite' => 'bail|required',
             'name' => 'bail|required|between:5,20|alpha',
             'surname' => 'bail|required|between:5,20|alpha',
             'email' => 'bail|required|email',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => 'bail|required|numeric',
-            'mobile' => 'bail|required|numeric'
+            'mobile' => 'bail|required|numeric',
+            'avatar-input' => 'file|mimes:jpg,png,gif'
         ]);
-        
-        // msg info wether ok or error
+
+        if ($validator->fails()) {
+            return redirect('/home')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if ($request->hasFile('avatar-input')) {
+            $image = $request->file('avatar-input');
+            $filename = $image->getClientOriginalName();
+            $destinationPath = public_path().'/images' ;
+            $image->move($destinationPath, $filename);
+        }
 
         $user = new \App\User;
+
+        $user->image = $request->input('avatar-hidden-input');
+        $user->civilite = $request->civilite;
         $user->name = $request->name;
         $user->surname = $request->surname;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->mobile = $request->mobile;
         $user->password = $request->password;
+        $user->status = 'Inactif';
 
         $user->save();
 
-        return view('home');
+        return view('home', ['user' => Auth::user()]);
     }
 
     /**
@@ -81,7 +100,7 @@ class HomeController extends Controller
 
         $user->save();
 
-        return view('home');
+        return view('home', ['user' => Auth::user()]);
     }
 
     /**
@@ -92,7 +111,22 @@ class HomeController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return view('home');
+        return view('home', ['user' => Auth::user()]);
+    }
+
+    /**
+     * Toggle user' status.
+     */
+    public function toggle($id)
+    {
+        $user = User::find($id);
+        $user->status = ($user->status == 'Actif') ? 'Inactif' : 'Actif';
+        $user->save();
+
+        $data = ['id' => $id, 'status' => $user->status];
+
+        return response($data, 200)
+                    ->header('Content-Type', 'application/json');
     }
 
 }
