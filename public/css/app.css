@@ -11082,6 +11082,13 @@ a.text-dark:focus {
   left: 8rem;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
 .material-icons.md-12 {
   font-size: 12px;
 }
@@ -11160,8 +11167,8 @@ button.btn {
 
 #avatar-image-logo {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border: solid #f0f1f6;
   border-width: 3px;
 }
@@ -11171,6 +11178,13 @@ button.btn {
   background-color: #f1f1f1;
   padding: 1.5rem 0;
   border-left: 6px solid #49c5b6;
+  box-shadow: 0 0 2px #fff;
+  transition: box-shadow 0.3s;
+}
+
+.left-side-button:hover {
+  cursor: pointer;
+  box-shadow: 0 0 15px #fff;
 }
 
 .material-icons-settings {
@@ -11186,5 +11200,33 @@ button.btn {
 .material-icons-chevron-right {
   position: absolute;
   right: 0.5rem;
+}
+
+#non-active-left-side-button {
+  border: 0;
+}
+
+.btn-breadcrumb {
+  background-image: url(/images/left-arrow.png?795566a8d19ee4c5fcc337eb82b78d60);
+  background-size: cover;
+  border: none;
+  width: 195px;
+  height: 49px;
+  text-align: center;
+  line-height: 49px;
+}
+
+.btn-breadcrumb-current {
+  background-image: url(/images/right-arrow.png?c890c80489b4de2db31edf47e54add64);
+  background-size: cover;
+  border: none;
+  width: 200px;
+  height: 49px;
+  text-align: center;
+  line-height: 49px;
+}
+
+.btn-breadcrumb a {
+  text-decoration: none;
 }
 

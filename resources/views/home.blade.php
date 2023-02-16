@@ -55,10 +55,10 @@
                             </div>
                         </div>
                         <div class="col-8">
-                            <div class="row">
-                                <div class="col-2">
+                            <div class="d-flex flex-wrap w-100">
+                                <div class="col-3">
                                     <div class="form-group">
-                                        <label for="civilite-input">Civilité<span class="material-icons md-14 text-danger">lock</span></label>
+                                        <label for="civilite-input">Civilité<span class="material-icons md-14 text-warning">lock</span></label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="civilite-input" placeholder="" name="civilite">
                                             <div class="dropdown input-group-append">
@@ -73,9 +73,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-5">
                                     <div class="form-group">
-                                        <label for="form002">Prénom<span class="material-icons md-14 text-danger">lock</span></label>
+                                        <label for="form002">Prénom<span class="material-icons md-14 text-warning">lock</span></label>
                                         <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus id="form002" placeholder="">
                                         @error('surname')
                                             <span class="invalid-feedback" role="alert">
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label for="form003">Nom<span class="material-icons md-14 text-danger">lock</span></label>
+                                        <label for="form003">Nom<span class="material-icons md-14 text-warning">lock</span></label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus id="form003" placeholder="">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -96,14 +96,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="card w-75">
+                            <div class="d-flex flex-wrap w-100 mb-4">
+                                <div class="card">
                                     <h5 class="card-header">Informations</h5>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="form004">Téléphone<span class="material-icons md-14 text-danger">lock</span></label>
+                                                    <label for="form004">Téléphone<span class="material-icons md-14 text-warning">lock</span></label>
                                                     <input id="form004" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
                                                     @error('phone')
                                                         <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="form005">Mobile<span class="material-icons md-14 text-danger">lock</span></label>
+                                                    <label for="form005">Mobile<span class="material-icons md-14 text-warning">lock</span></label>
                                                     <input id="form005" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
                                                     @error('mobile')
                                                         <span class="invalid-feedback" role="alert">
@@ -127,14 +127,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row m-2">
-                                <div class="card w-90">
+                            <div class="d-flex flex-wrap w-100 mb-4">
+                                <div class="card">
                                     <h5 class="card-header"><span class="material-icons md-14 text-secondary">lock</span>Informations de connexion</h5>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="form006">Email<span class="material-icons md-14 text-danger">lock</span></label>
+                                                    <label for="form006">Email<span class="material-icons md-14 text-warning">lock</span></label>
                                                     <input id="form006" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                                                     @error('email')
                                                         <span class="invalid-feedback" role="alert">
@@ -145,7 +145,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="form007">Mot de passe<span class="material-icons md-14 text-danger">lock</span></label>
+                                                    <label for="form007">Mot de passe<span class="material-icons md-14 text-warning">lock</span></label>
                                                     <input id="form007" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                                                     @error('password')
                                                         <span class="invalid-feedback" role="alert">
@@ -154,7 +154,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="form008">Confirmer mot de passe<span class="material-icons md-14 text-danger">lock</span></label>
+                                                    <label for="form008">Confirmer mot de passe<span class="material-icons md-14 text-warning">lock</span></label>
                                                     <input id="form008" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                                 </div>
                                             </div>
@@ -164,8 +164,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-between">
-                        <div class="f-item text-danger d-flex align-items-center"><span class="material-icons md-14">lock</span>&nbsp;Champs obligatoires</div>
+                    <div class="row d-flex justify-content-between pr-3">
+                        <div class="f-item text-warning d-flex align-items-center"><span class="material-icons md-14">lock</span>&nbsp;Champs obligatoires</div>
                         <div class="f-item">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                             <button type="submit" class="btn btn-primary" id='add_task_submit'>Enregistrer</button>
@@ -204,10 +204,10 @@
                         </div>
                     </div>
                     <div class="col-8">
-                        <div class="row">
-                            <div class="col-2">
+                        <div class="d-flex flex-wrap w-100">
+                            <div class="col-3">
                                 <div class="form-group">
-                                    <label for="edit-civilite-input">Civilité<span class="material-icons md-14 text-danger">lock</span></label>
+                                    <label for="edit-civilite-input">Civilité<span class="material-icons md-14 text-warning">lock</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="edit-civilite-input" placeholder="" name="civilite">
                                         <div class="dropdown input-group-append">
@@ -222,9 +222,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-5">
                                 <div class="form-group">
-                                    <label for="form029">Prénom<span class="material-icons md-14 text-danger">lock</span></label>
+                                    <label for="form029">Prénom<span class="material-icons md-14 text-warning">lock</span></label>
                                     <input type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus id="form029" placeholder="">
                                     @error('surname')
                                         <span class="invalid-feedback" role="alert">
@@ -235,7 +235,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="form010">Nom<span class="material-icons md-14 text-danger">lock</span></label>
+                                    <label for="form010">Nom<span class="material-icons md-14 text-warning">lock</span></label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus id="form010" placeholder="">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -245,14 +245,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="card w-75">
+                        <div class="d-flex flex-wrap w-100 mb-4">
+                            <div class="card">
                                 <h5 class="card-header">Informations</h5>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="form011">Téléphone<span class="material-icons md-14 text-danger">lock</span></label>
+                                                <label for="form011">Téléphone<span class="material-icons md-14 text-warning">lock</span></label>
                                                 <input id="form011" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
                                                 @error('phone')
                                                     <span class="invalid-feedback" role="alert">
@@ -263,7 +263,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="form012">Mobile<span class="material-icons md-14 text-danger">lock</span></label>
+                                                <label for="form012">Mobile<span class="material-icons md-14 text-warning">lock</span></label>
                                                 <input id="form012" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
                                                 @error('mobile')
                                                     <span class="invalid-feedback" role="alert">
@@ -276,14 +276,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row m-2">
-                            <div class="card w-90">
+                        <div class="d-flex flex-wrap w-100 mb-4">
+                            <div class="card">
                                 <h5 class="card-header"><span class="material-icons md-14 text-secondary">lock</span>Informations de connexion</h5>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group" id="parent-reset-password">
-                                                <label for="form013">Email<span class="material-icons md-14 text-danger">lock</span></label>
+                                                <label for="form013">Email<span class="material-icons md-14 text-warning">lock</span></label>
                                                 <input id="form013" type="email" class="form-control" name="email" value="" required autocomplete="email">
                                                 @error('email')
                                                     <span class="invalid-feedback" role="alert">
@@ -292,7 +292,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-6 changePass" id="{{ $user->id }}">
+                                        <div class="col-6 changePass d-flex align-items-center pt-3" id="{{ $user->id }}">
                                             <button class="btn btn-danger" data-action="{{ route('password.email') }}" id="changePassBtn">Changer de mot de passe</button>
                                         </div>
                                     </div>
@@ -301,8 +301,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex justify-content-between">
-                    <div class="f-item text-danger d-flex align-items-center"><span class="material-icons md-14">lock</span>&nbsp;Champs obligatoires</div>
+                <div class="row d-flex justify-content-between pr-3">
+                    <div class="f-item text-warning d-flex align-items-center"><span class="material-icons md-14">lock</span>&nbsp;Champs obligatoires</div>
                     <div class="f-item">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-primary" id='add_task_submit2'>Enregistrer</button>
@@ -380,11 +380,6 @@
     <div class="col-md-12 user-list"></div>
 </div>
 
-                
-
-<script type="text/javascript">
-    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-</script>
 
 <script type="text/javascript">
     var urlEdit = "";

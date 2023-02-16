@@ -37381,6 +37381,10 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+// For left side button
+__webpack_require__(/*! ./left_side */ "./resources/js/left_side.js");
+__webpack_require__(/*! ./breadcrumb */ "./resources/js/breadcrumb.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37429,6 +37433,64 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/breadcrumb.js":
+/*!************************************!*\
+  !*** ./resources/js/breadcrumb.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).on('click', '.breadcrumb-button', function () {
+  toggleLeftButtonAndBreadcrumb();
+});
+$(document).on('click', '#right-arrow-button-non-active', function () {
+  toggleLeftButtonAndBreadcrumb();
+});
+function toggleLeftButtonAndBreadcrumb() {
+  var userListContainer = $(".user-search-list");
+  var leftArrowBtn = $("#left-arrow-button");
+  var rightArrowBtn = $("#right-arrow-button");
+  rightArrowBtn.toggle();
+  leftArrowBtn.toggle();
+  var activeLeftBtn = $("#active-left-side-button");
+  var nonActiveLeftBtn = $("#non-active-left-side-button");
+  nonActiveLeftBtn.toggle();
+  activeLeftBtn.toggle();
+  if (userListContainer.hasClass("d-none")) {
+    userListContainer.toggleClass("d-none");
+  } else {
+    userListContainer.toggleClass("d-none");
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/left_side.js":
+/*!***********************************!*\
+  !*** ./resources/js/left_side.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).on('click', '.left-side-button', function () {
+  var userListContainer = $(".user-search-list");
+  var activeLeftBtn = $("#active-left-side-button");
+  var nonActiveLeftBtn = $("#non-active-left-side-button");
+  nonActiveLeftBtn.toggle();
+  activeLeftBtn.toggle();
+  var leftArrowBtn = $("#left-arrow-button");
+  var rightArrowBtn = $("#right-arrow-button");
+  rightArrowBtn.toggle();
+  leftArrowBtn.toggle();
+  if (userListContainer.hasClass("d-none")) {
+    userListContainer.toggleClass("d-none");
+  } else {
+    userListContainer.toggleClass("d-none");
+  }
+});
 
 /***/ }),
 

@@ -126,7 +126,7 @@ class HomeController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return view('home', ['user' => Auth::user()]);
+        return redirect('/')->with('success', 'Utilisateur supprimé.');
     }
 
     /**

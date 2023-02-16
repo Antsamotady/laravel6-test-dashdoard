@@ -63,9 +63,9 @@ class SearchController extends Controller
                     $output.='<div class="card mt-2">'.
                             '<div class="card-body">'.
                                 '<form class="row row-cols-lg-auto g-3">'.
-                                    '<div class="col-1"><img id="avatar-image-list" src="images/'.$avatar.'" alt="Avatar"></div>'.
-                                    '<div class="col-2">'.$user->name.' '.$user->surname.'</div>'.
-                                    '<div class="col-4">'.
+                                    '<div class="col-2"><img class="ml-4" id="avatar-image-list" src="images/'.$avatar.'" alt="Avatar"></div>'.
+                                    '<div class="col-2"><p><strong>'.$user->name.' '.$user->surname.'</strong></p></div>'.
+                                    '<div class="col-3">'.
                                         '<div class="col-12">'.
                                         '<button class="btn btn-info toggle-status"'.
                                             'id="toggle-status-btn-'.$user->id.'-'.$user->status.'" '.
