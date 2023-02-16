@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('content')
+
+@section('content-login')
 <div class="login d-flex align-items-center">
 	<div class="bg-right"></div>
 	<div class="bg-left"></div>

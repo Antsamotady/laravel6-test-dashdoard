@@ -39,9 +39,48 @@
                 </form>
             </li>
         </ul>
-        @endauth
   
-        @yield('content')
+        <div class="m-2">
+            <div class="row">
+                <div class="col-2">
+                    <div class="row">
+                        <div class="col-4">
+                            <img id="avatar-image-logo" src="images/{{ Auth::user()->image }}" alt="">
+                        </div>
+                        <div class="col-8">
+                            Bienvenue,
+                            Mme Zzzzzz Zzzzz
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10">
+                    BREADCRUMB Breadcrumb
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active text-primary" href="#">Menu</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center left-side-button mt-4">
+                        <span class="material-icons text-primary md-22 material-icons-settings">settings</span>
+                        <span class="text-btn-left-side">Gestion générale</span>
+                        <span class="material-icons text-secondary md-18 material-icons-chevron-right">chevron_right</span>
+                    </div>
+
+                </div>
+                <div class="col-10">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+        @endauth
+
+
+        @yield('content-login')
 
         <script type="text/javascript">
             var name = "";
