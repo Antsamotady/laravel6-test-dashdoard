@@ -4,3 +4,5 @@ require('./bootstrap');
 require('./left_side');
 
 require('./breadcrumb');
+
+require('./user_list');
