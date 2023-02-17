@@ -51,7 +51,7 @@
                         </div>
                         <div class="col-8">
                             Bienvenue,
-                            <div class="font-weight-bolder">{{ Auth::user()->surname }}&nbsp;{{ Auth::user()->name }}</div>
+                            <div class="font-weight-bolder">{{ Auth::user()->civilite }}&nbsp;{{ Auth::user()->surname }}&nbsp;{{ Auth::user()->name }}</div>
                         </div>
                     </div>
                 </div>
@@ -99,8 +99,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-10 user-search-list d-none">
-                    @yield('content')
+                <div class="col-10">
+                    @if(session()->has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            {!! implode('', $errors->all('<div>:message</div>')) !!}
+                        </div>
+                    @endif
+                    <div class="user-search-list d-none">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
         </div>

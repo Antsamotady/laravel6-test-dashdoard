@@ -9,21 +9,10 @@
         id="addUser">
         <div class="d-flex align-items-center justify-content-center">
             Ajouter un utilisateur
-            <span class="material-icons md-24">add</span>
+            <span class="material-icons font-weight-bolder md-24">add</span>
         </div>
     </button>
 </div>
-@if(session()->has('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session()->get('success') }}
-    </div>
-@endif
-
-@if($errors->any())
-    <div class="alert alert-danger" role="alert">
-        {!! implode('', $errors->all('<div>:message</div>')) !!}
-    </div>
-@endif
 
 <div class="modal modal-user fade" id="modalNewUser" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel"
     aria-hidden="true">
@@ -187,6 +176,7 @@
         <div class="modal-body">
             <form method="POST" id="editUserForm" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-4 d-flex flex-column align-items-center">
                         <img id="avatar-image-edit-form" src="" alt="">
@@ -327,7 +317,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="button" id="click-me" class="btn btn-warning" onclick="validate();">Valider</a>
+            <button type="button" id="confirm-user-deletion" class="btn btn-warning">Valider</a>
         </div>
         </div>
     </div>

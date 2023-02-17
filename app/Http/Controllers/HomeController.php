@@ -114,7 +114,7 @@ class HomeController extends Controller
         $user->mobile = $request->mobile;
         
         $user->save();
-        
+
         return redirect('/home')->with('success', 'Mise à jour réussi.');
     }
 

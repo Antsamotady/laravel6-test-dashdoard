@@ -11089,6 +11089,10 @@ a.text-dark:focus {
   margin-left: 0px;
 }
 
+.card-header {
+  background-color: #e6eaec;
+}
+
 .material-icons.md-12 {
   font-size: 12px;
 }

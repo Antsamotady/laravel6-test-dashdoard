@@ -37573,18 +37573,16 @@ $(document).on('click', '.editUser', function () {
   urlImg = 'images/' + image;
   imgTag = document.querySelectorAll('#avatar-image-edit-form');
   imgTag[0].setAttribute('src', urlImg);
-  urlEdit = "{{ route('user.update', '------')}}";
-  urlEdit = urlEdit.replace("------", id);
+  urlEdit = '/home/update/' + id;
   form = document.querySelectorAll('#editUserForm');
   form[0].setAttribute('action', urlEdit);
   console.log($('.changePass').attr('id') + '--' + id);
   if ($('.changePass').attr('id') == id) $('.changePass').addClass('d-none');else $('.changePass').removeClass('d-none');
 });
-$(document).on('click', '.delUser', function () {
+$(document).on('click', '.delUser', function (event) {
   event.preventDefault();
   var id = $(this).attr('id');
-  urlDelete = "{{ route('user.destroy', '------')}}";
-  urlDelete = urlDelete.replace("------", id);
+  urlDelete = '/home/delete/' + id;
 });
 $(document).on('click', '#del-avatar-btn', function () {
   event.preventDefault();
@@ -37616,9 +37614,9 @@ function toggleCheckBox(data) {
   var inactifChkBox = $('<span id="toggle-status-txt-' + data.id + '" class="font-weight-bolder" style="color: #fe794e";">INACTIF</span>');
   if (data.status == 'Actif') $(mySelector).replaceWith(actifChkBox);else $(mySelector).replaceWith(inactifChkBox);
 }
-function validate() {
+$(document).on('click', '#confirm-user-deletion', function () {
   window.location = urlDelete;
-}
+});
 function removeAvatar() {
   var image = document.getElementById("avatar-image-form");
   image.src = "";

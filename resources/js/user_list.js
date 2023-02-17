@@ -80,8 +80,7 @@ $(document).on('click', '.editUser', function(){
     imgTag = document.querySelectorAll('#avatar-image-edit-form');
     imgTag[0].setAttribute('src', urlImg);
 
-    urlEdit = "{{ route('user.update', '------')}}";
-    urlEdit = urlEdit.replace("------", id);
+    urlEdit = '/home/update/'+id;
 
     form = document.querySelectorAll('#editUserForm');
     form[0].setAttribute('action', urlEdit);
@@ -94,13 +93,11 @@ $(document).on('click', '.editUser', function(){
 
 });
 
-$(document).on('click', '.delUser', function(){
+$(document).on('click', '.delUser', function(event){
     event.preventDefault();
     var id = $(this).attr('id');
 
-    urlDelete = "{{ route('user.destroy', '------')}}";
-    urlDelete = urlDelete.replace("------", id);
-
+    urlDelete = '/home/delete/'+id;
 });
 
 $(document).on('click', '#del-avatar-btn', function(){
@@ -145,9 +142,9 @@ function toggleCheckBox(data) {
         $(mySelector).replaceWith(inactifChkBox);
 }
 
-function validate() {
+$(document).on('click', '#confirm-user-deletion', function(){
     window.location = urlDelete;
-}
+});
 
 function removeAvatar() {
       var image = document.getElementById("avatar-image-form");
