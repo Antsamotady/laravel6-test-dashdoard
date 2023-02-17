@@ -7,7 +7,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
     <title>@yield('title', 'Laravel test')</title>
 
     <!-- Scripts -->
@@ -20,7 +19,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
 </head>
 <body>
     <div id="app">
@@ -117,11 +115,7 @@
                 </div>
             </div>
         </div>
-        @endauth
 
-        @yield('content-login')
-
-        
         <script type="text/javascript">
             var name = "";
             var status = "";
@@ -138,6 +132,14 @@
                 });
             }
         </script>
+
+        @endauth
+
+        @yield('content-login')
+
+        @yield('content-email')
+
+        @yield('content-reset')
 
     </div>
 </body>

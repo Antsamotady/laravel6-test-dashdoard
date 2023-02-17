@@ -6,7 +6,7 @@
 	<div class="bg-left"></div>
 	<div class="login-form col-md-6 col-lg-3">
 		<div class="card">
-			<div class="card-header">
+			<div class="card-header card-header-login">
 				{{ __('Login') }}
 			</div>
 			<div class="card-body">
@@ -47,7 +47,7 @@
 						<div class="col-md-8 offset-md-0">
 							 -->
 							<div class="col-md-12">
-								<button type="submit" class="btn btn-warning w-100">{{ __('Login') }}</button>
+								<button type="submit" class="btn btn-warning w-100">{{ __('Se connecter') }}</button>
 							</div>
 							@if (Route::has('password.request'))
 							<div class="col-md-12">

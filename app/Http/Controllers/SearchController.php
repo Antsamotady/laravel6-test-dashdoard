@@ -68,7 +68,7 @@ class SearchController extends Controller
                             '<div class="card-body">'.
                                 '<form class="row row-cols-lg-auto g-3">'.
                                     '<div class="col-2"><img class="ml-4" id="avatar-image-list" src="images/'.$avatar.'" alt="Avatar"></div>'.
-                                    '<div class="col-2"><p><strong>'.$user->name.' '.$user->surname.'</strong></p></div>'.
+                                    '<div class="col-2"><p><strong>'.$user->surname.' '.$user->name.'</strong></p></div>'.
                                     '<div class="col-3">'.
                                         '<div class="row mb-4">'.
                                         $switchBtn.$status.'</div>'.

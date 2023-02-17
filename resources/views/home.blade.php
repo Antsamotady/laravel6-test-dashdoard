@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="col-4 pl-0 mb-2">
+<div class="col-4 mb-2">
     <button type="submit" 
         class="btn btn-primary col-8 text-light" 
         data-toggle="modal"  
