@@ -24,7 +24,7 @@ class SearchController extends Controller
             if($request->name && $request->status && $request->status!='Tous')
                 $users=DB::table('users')
                     ->where('name','LIKE','%'.$request->name.'%')
-                    ->where('status','LIKE','%'.$request->status.'%')
+                    ->where('status','LIKE', $request->status)
                     ->get();
             if($request->name && (is_null($request->status) || $request->status=='Tous'))
                 $users=DB::table('users')
@@ -32,7 +32,7 @@ class SearchController extends Controller
                     ->get();
             if(is_null($request->name) && $request->status && $request->status!='Tous')
                 $users=DB::table('users')
-                    ->where('status','LIKE','%'.$request->status.'%')
+                    ->where('status','LIKE', $request->status)
                     ->get();
             if(is_null($request->name) && (is_null($request->status) || $request->status=='Tous'))
                 $users=DB::table('users')
