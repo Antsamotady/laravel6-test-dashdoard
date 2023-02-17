@@ -72,7 +72,7 @@ class HomeController extends Controller
 
         $user->save();
 
-        return redirect('/')->with('success', 'Nouvel utilisateur bien enregistré.');
+        return redirect('/home')->with('success', 'Nouvel utilisateur bien enregistré.');
     }
 
     /**
@@ -115,7 +115,7 @@ class HomeController extends Controller
         
         $user->save();
         
-        return redirect('/')->with('success', 'Mise à jour réussi.');
+        return redirect('/home')->with('success', 'Mise à jour réussi.');
     }
 
     /**
@@ -126,7 +126,7 @@ class HomeController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return redirect('/')->with('success', 'Utilisateur supprimé.');
+        return redirect('/home')->with('success', 'Utilisateur supprimé.');
     }
 
     /**

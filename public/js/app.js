@@ -37611,13 +37611,10 @@ $(document).on('click', '.toggle-status', function () {
   });
 });
 function toggleCheckBox(data) {
-  var url = '/home/toggle/' + data.id;
-  var currentId = 'toggle-status-btn-' + data.id + '-' + data.status;
-  var mySelector = '#' + currentId;
-  console.log(currentId);
-  var actifChkBox = $('<button id="' + currentId + '" type="button" class="btn btn-success toggle-status" data-action="' + url + '">ACTIF</button>');
-  var inactifChkBox = $('<button id="' + currentId + '" type="button" class="btn btn-warning toggle-status" data-action="' + url + '">INACTIF</button>');
-  if (data.status == 'Actif') $(mySelector).replaceWith(inactifChkBox);else $(mySelector).replaceWith(actifChkBox);
+  var mySelector = '#toggle-status-txt-' + data.id;
+  var actifChkBox = $('<span id="toggle-status-txt-' + data.id + '" class="font-weight-bolder" style="color: #5cb85c;">ACTIF</span>');
+  var inactifChkBox = $('<span id="toggle-status-txt-' + data.id + '" class="font-weight-bolder" style="color: #fe794e";">INACTIF</span>');
+  if (data.status == 'Actif') $(mySelector).replaceWith(actifChkBox);else $(mySelector).replaceWith(inactifChkBox);
 }
 function validate() {
   window.location = urlDelete;

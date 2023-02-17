@@ -42,10 +42,14 @@ class SearchController extends Controller
             if($users){
                 foreach ($users as $key => $user) {
                     $createDate = str_replace('-', '/', substr($user->created_at, 0, -9));
-                    if($user->status=='Actif')
-                        $status = '<input type="checkbox" checked data-toggle="toggle" data-onstyle="outline-success" data-offstyle="outline-warning"><span class="text-success ml-2">ACTIF</span>';
-                    else
-                        $status = '<input type="checkbox" data-toggle="toggle" data-onstyle="outline-warning" data-offstyle="outline-success"><span class="text-warning ml-2">INACTIF</span>';
+
+                    if($user->status=='Actif') {
+                        $status = '<span id="toggle-status-txt-'.$user->id.'" class="font-weight-bolder" style="color: #5cb85c;">ACTIF</span>';
+                        $switchBtn = '<div class="col-6 toggle-status" id="toggle-status-btn-'.$user->id.'-'.$user->status.'" data-action="/home/toggle/'.$user->id.'"><div class="button-toggle b2" id="switch-status-btn"><input type="checkbox" class="checkbox" /><div class="knobs"><span></span></div><div class="layer"></div></div></div>';
+                    } else {
+                        $status = '<span id="toggle-status-txt-'.$user->id.'" class="font-weight-bolder" style="color: #fe794e;">INACTIF</span>';
+                        $switchBtn = '<div class="col-6 toggle-status" id="toggle-status-btn-'.$user->id.'-'.$user->status.'" data-action="/home/toggle/'.$user->id.'"><div class="button-toggle b2" id="switch-status-btn"><input type="checkbox" class="checkbox" checked/><div class="knobs"><span></span></div><div class="layer"></div></div></div>';
+                    }
 
                     if($user->password != $loggeduser->getAuthPassword())
                         $delButton = '<button data-toggle="modal" data-backdrop="static" data-target="#modalConfirmDel" type="submit" class="btn btn-warning col-12 delUser" id="'.$user->id.'">Supprimer</button>';
@@ -66,13 +70,8 @@ class SearchController extends Controller
                                     '<div class="col-2"><img class="ml-4" id="avatar-image-list" src="images/'.$avatar.'" alt="Avatar"></div>'.
                                     '<div class="col-2"><p><strong>'.$user->name.' '.$user->surname.'</strong></p></div>'.
                                     '<div class="col-3">'.
-                                        '<div class="col-12">'.
-                                        '<button class="btn btn-info toggle-status"'.
-                                            'id="toggle-status-btn-'.$user->id.'-'.$user->status.'" '.
-                                            'data-action="/home/toggle/'.$user->id.'">'.
-                                            'Toggle Status'.
-                                        '</button>
-                                        '.$status.'</div>'.
+                                        '<div class="row mb-4">'.
+                                        $switchBtn.$status.'</div>'.
                                         '<div class="col-12">Date de création du compte : '.$createDate.'</div>'.
                                     '</div>'.
                                     '<div class="col-3">'.
