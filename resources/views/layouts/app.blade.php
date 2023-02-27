@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/chart.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -56,12 +57,11 @@
                 <div class="col-10">
                     <div id="left-arrow-button">
                         <div class="d-flex">
-                            <span class="btn-breadcrumb breadcrumb-button">Gestion générale</span>
-                            <span class="btn-breadcrumb text-secondary" id="right-arrow-button-non-active">Liste des utilisateurs</span>
+                            <span class="btn-breadcrumb-tab breadcrumb-button2 text-light">Tableau de bord</span>
                         </div>
                     </div>
                     <div id="right-arrow-button" style="display:none;">
-                        <div href="#" title="" class="breadcrumb-button">
+                        <div href="#" title="" class="">
                             <div class="d-flex">
                                 <span class="btn-breadcrumb" id="left-arrow-button"><a href="#" class="breadcrumb-button">Gestion générale</a></span>
                                 <span class="btn-breadcrumb btn-breadcrumb-current text-light" id="right-arrow-button">Liste des utilisateurs</span>
@@ -78,6 +78,18 @@
                             <a class="nav-link active text-primary" href="#">Menu</a>
                         </li>
                     </ul>
+                    <div id="non-active-left-side-button2" style="display:none;">
+                        <div id="non-active-left-side-button2" class="d-flex align-items-center left-side-button2 mt-4">
+                            <span class="material-icons text-primary md-22 material-icons-settings">settings</span>
+                            <span class="text-btn-left-side">Tableau de bord</span>
+                        </div>
+                    </div>
+                    <div id="active-left-side-button2">
+                        <div class="d-flex align-items-center left-side-button2 mt-4">
+                            <span class="material-icons text-primary md-22 material-icons-settings">settings</span>
+                            <span class="text-btn-left-side">Tableau de bord</span>
+                        </div>
+                    </div>
                     <div id="non-active-left-side-button">
                         <div id="non-active-left-side-button" class="d-flex align-items-center left-side-button mt-4">
                             <span class="material-icons text-primary md-22 material-icons-settings">settings</span>
@@ -109,6 +121,66 @@
                             {!! implode('', $errors->all('<div>:message</div>')) !!}
                         </div>
                     @endif
+
+
+                    <div class="user-stat-cards">
+                        <div class="row mb-4">
+                            <div class="col-3">
+                                <div class="card stat-card">
+                                    <div class="card-body text-center" id="user-counts">
+                                        <div class="">Nombre d'utilisateurs total</div>
+                                        <h4 class="card-text" style="color: #3490dc;">{{ $totalUsers }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card stat-card">
+                                    <div class="card-body text-center" id="user-counts">
+                                        <div class="">Nombre d'utilisateurs actifs</div>
+                                        <h4 class="card-text" style="color: #3490dc;">{{ $totalActifUsers }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card stat-card">
+                                    <div class="card-body text-center" id="user-counts">
+                                        <div class="">Nombre d'utilisateurs inactifs</div>
+                                        <h4 class="card-text" style="color: #3490dc;">{{ $totalInactifUsers }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card stat-card">
+                                    <div class="card-body text-center" id="user-counts">
+                                        <div class="">Profils photos</div>
+                                        <h4 class="card-text" style="color: #3490dc;">{{ $imageCount }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-between mt-2">
+                            <div class="col-6">
+                                <div class="card stat-card">
+                                    <div class="card-header text-center">Typologie d'utilisateurs</div>
+                                    <div class="card-body">
+                                        <canvas id="bar-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card stat-card">
+                                    <div class="card-header text-center">Pourcentage d'actif / Typologie d'utilisateurs</div>
+                                    <div class="card-body">
+                                        <canvas id="donut-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
                     <div class="user-search-list d-none">
                         @yield('content')
                     </div>
@@ -131,6 +203,127 @@
 
                 });
             }
+
+
+            var labels = ['Madame', 'Monsieur', 'Mademoiselle'];
+
+            var data1 = @json($groupedUser->pluck('total'));
+            var barOptions = {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        callbacks: {
+                            label: function (context) {
+                                var label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                var value = context.parsed.y;
+                                var sum = context.dataset.data.reduce((a, b) => a + b, 0);
+                                var percentage = Math.round((value / sum) * 10000) / 100;
+                                label += percentage + '%';
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            precision: 0,
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }
+                }
+            };
+
+            var chart1 = new Chart(document.getElementById('bar-chart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data1,
+                        backgroundColor: '#ffa229',
+                        borderColor: '#ffa229',
+                        borderWidth: 1
+                    }]
+                },
+                options: barOptions
+            });
+
+
+            var data2 = @json($groupedActifUser);
+            var donutOptions = {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'right'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        callbacks: {
+                            label: function(context) {
+                                var label = context.label;
+                                var value = context.parsed;
+                                var total = context.dataset.data.reduce(function(acc, curr) {
+                                    return acc + curr;
+                                });
+                                var percentage = Math.round((value / total) * 100) + '%';
+                                // return label + ': ' + value + ' (' + percentage + ')';
+                                return percentage;
+                            }
+                        }
+                    }
+                }
+            };
+
+            var chart2 = new Chart(document.getElementById('donut-chart'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: [
+                            data2.find(x => x.civilite === 'Me').count,
+                            data2.find(x => x.civilite === 'Mr').count,
+                            data2.find(x => x.civilite === 'Mlle').count
+                        ],
+                        backgroundColor: [
+                            '#ef93e7',
+                            '#00a1ff',
+                            '#d08f97'
+                        ]
+                    }]
+                },
+                options: donutOptions
+            });
+
+
+            $(document).on('click', '.left-side-button2', function(){
+                var userListContainer = $(".user-search-list");
+                var userStatContainer = $(".user-stat-cards");
+
+                var activeLeftBtn = $("#active-left-side-button");
+                var nonActiveLeftBtn = $("#non-active-left-side-button");
+
+
+                var activeLeftBtn2 = $("#active-left-side-button2");
+                var nonActiveLeftBtn2 = $("#non-active-left-side-button2");
+
+                nonActiveLeftBtn2.toggle();
+                activeLeftBtn2.toggle();
+                
+                if (userStatContainer.hasClass("d-none")) {
+                    userStatContainer.toggleClass("d-none");
+                } else {
+                    userStatContainer.toggleClass("d-none");
+                }
+            });
+
+
         </script>
 
         @endauth

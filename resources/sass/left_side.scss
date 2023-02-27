@@ -1,4 +1,4 @@
-.left-side-button {
+.left-side-button, .left-side-button2 {
   position: relative;
 
   background-color: #f1f1f1;
@@ -9,7 +9,7 @@
   transition: box-shadow 0.3s;
 }
 
-.left-side-button:hover {
+.left-side-button:hover, .left-side-button2:hover {
   cursor: pointer;
   box-shadow: 0 0 15px #fff;
 }
@@ -29,6 +29,7 @@
   right: 0.5rem;
 }
 
-#non-active-left-side-button {
+#non-active-left-side-button, #non-active-left-side-button2 {
   border: 0;
+  background-color: transparent;
 }

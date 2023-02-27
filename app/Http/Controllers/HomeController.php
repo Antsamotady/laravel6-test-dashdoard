@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,35 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['user' => Auth::user()]);
+        $users = User::all();
+        $totalUsers = $users->count();
+        $totalActifUsers = User::select(DB::raw('count(*) as total_actif_users'))
+            ->where('status', '=', 'Actif')
+            ->first()
+            ->total_actif_users;
+        $totalInactifUsers = User::select(DB::raw('count(*) as total_inactif_users'))
+            ->where('status', '=', 'Inactif')
+            ->first()
+            ->total_inactif_users;
+        $imageCount = User::whereNotNull('image')->count();
+
+        $groupedUser = User::select(DB::raw('civilite, count(*) as total'))
+             ->groupBy('civilite')
+             ->get();
+
+        $groupedActifUser = User::select(DB::raw('civilite, count(*) as count'))
+             ->where('status', '=', 'Actif')
+             ->groupBy('civilite')
+             ->get();
+
+        return view('home', [
+            'user' => Auth::user(),
+            'totalUsers' => $totalUsers,
+            'totalActifUsers' => $totalActifUsers,
+            'totalInactifUsers' => $totalInactifUsers,
+            'imageCount' => $imageCount,
+            'groupedUser' => $groupedUser,
+            'groupedActifUser' => $groupedActifUser]);
     }
 
     /**

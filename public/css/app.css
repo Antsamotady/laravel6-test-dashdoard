@@ -11132,6 +11132,14 @@ button.btn {
   color: #f8f9fa;
 }
 
+.stat-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#user-counts {
+  border-left: 3px solid blue;
+}
+
 #search-btn {
   width: 250px;
 }
@@ -11184,7 +11192,8 @@ button.btn {
   border-width: 3px;
 }
 
-.left-side-button {
+.left-side-button,
+.left-side-button2 {
   position: relative;
   background-color: #f1f1f1;
   padding: 1.5rem 0;
@@ -11193,7 +11202,8 @@ button.btn {
   transition: box-shadow 0.3s;
 }
 
-.left-side-button:hover {
+.left-side-button:hover,
+.left-side-button2:hover {
   cursor: pointer;
   box-shadow: 0 0 15px #fff;
 }
@@ -11213,8 +11223,10 @@ button.btn {
   right: 0.5rem;
 }
 
-#non-active-left-side-button {
+#non-active-left-side-button,
+#non-active-left-side-button2 {
   border: 0;
+  background-color: transparent;
 }
 
 .btn-breadcrumb {
@@ -11227,7 +11239,8 @@ button.btn {
   line-height: 49px;
 }
 
-.btn-breadcrumb-current {
+.btn-breadcrumb-current,
+.btn-breadcrumb-tab {
   background-image: url(/images/right-arrow.png?c890c80489b4de2db31edf47e54add64);
   background-size: cover;
   border: none;
