@@ -80,13 +80,13 @@
                     </ul>
                     <div id="non-active-left-side-button2" style="display:none;">
                         <div id="non-active-left-side-button2" class="d-flex align-items-center left-side-button2 mt-4">
-                            <span class="material-icons text-primary md-22 material-icons-settings">settings</span>
+                            <span class="material-icons text-primary md-22 material-icons-settings">schedule</span>
                             <span class="text-btn-left-side">Tableau de bord</span>
                         </div>
                     </div>
                     <div id="active-left-side-button2">
                         <div class="d-flex align-items-center left-side-button2 mt-4">
-                            <span class="material-icons text-primary md-22 material-icons-settings">settings</span>
+                            <span class="material-icons text-primary md-22 material-icons-settings">schedule</span>
                             <span class="text-btn-left-side">Tableau de bord</span>
                         </div>
                     </div>
