@@ -42,7 +42,7 @@ class HomeController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => 'bail|required|numeric',
             'mobile' => 'bail|required|numeric',
-            'avatar-input' => 'file|mimes:jpg,png,gif'
+            'avatar-input' => 'file|max:2048|mimes:jpg,png,gif'
         ]);
 
         if ($validator->fails()) {
@@ -87,7 +87,7 @@ class HomeController extends Controller
             'email' => 'bail|required|email',
             'phone' => 'bail|required|numeric',
             'mobile' => 'bail|required|numeric',
-            'avatar-input' => 'file|mimes:jpg,png,gif'
+            'avatar-input' => 'file|max:2048|mimes:jpg,png,gif'
         ]);
 
         if ($validator->fails()) {
