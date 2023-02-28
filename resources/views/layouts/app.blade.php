@@ -205,7 +205,7 @@
             }
 
 
-            var labels = ['Madame', 'Monsieur', 'Mademoiselle'];
+            var labels = ['Mademoiselle', 'Madame', 'Monsieur'];
 
             var data1 = @json($groupedUser->pluck('total'));
             var barOptions = {
@@ -214,20 +214,7 @@
                         display: false
                     },
                     tooltip: {
-                        mode: 'index',
-                        callbacks: {
-                            label: function (context) {
-                                var label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                var value = context.parsed.y;
-                                var sum = context.dataset.data.reduce((a, b) => a + b, 0);
-                                var percentage = Math.round((value / sum) * 10000) / 100;
-                                label += percentage + '%';
-                                return label;
-                            }
-                        }
+                        enabled: false
                     }
                 },
                 scales: {
@@ -257,8 +244,17 @@
 
 
             var data2 = @json($groupedActifUser);
+            var labels = ['Madame', 'Mademoiselle', 'Monsieur'];
+            var countMe = data2.find(x => x.civilite === 'Me') ? data2.find(x => x.civilite === 'Me').count : 0;
+            var countMr = data2.find(x => x.civilite === 'Mr') ? data2.find(x => x.civilite === 'Mr').count : 0;
+            var countMlle = data2.find(x => x.civilite === 'Mlle') ? data2.find(x => x.civilite === 'Mlle').count : 0;
+
             var donutOptions = {
                 plugins: {
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    Responsive: true,
+                    cutoutPercentage: 50,
                     legend: {
                         display: true,
                         position: 'right'
@@ -269,11 +265,8 @@
                             label: function(context) {
                                 var label = context.label;
                                 var value = context.parsed;
-                                var total = context.dataset.data.reduce(function(acc, curr) {
-                                    return acc + curr;
-                                });
+                                var total = {{ $totalUsers }};
                                 var percentage = Math.round((value / total) * 100) + '%';
-                                // return label + ': ' + value + ' (' + percentage + ')';
                                 return percentage;
                             }
                         }
@@ -287,9 +280,9 @@
                     labels: labels,
                     datasets: [{
                         data: [
-                            data2.find(x => x.civilite === 'Me').count,
-                            data2.find(x => x.civilite === 'Mr').count,
-                            data2.find(x => x.civilite === 'Mlle').count
+                            countMe,
+                            countMlle,
+                            countMr
                         ],
                         backgroundColor: [
                             '#ef93e7',
