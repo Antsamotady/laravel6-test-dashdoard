@@ -1,3 +1,2 @@
-# Travellist - Laravel Demo App
-
-This is a Laravel 6 demo application to support our Laravel guides.
+# laravel6-test-dashdoard - Laravel Demo App
+Derived from a test I did.
