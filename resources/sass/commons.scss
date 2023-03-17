@@ -1,0 +1,39 @@
+// Overriding bootstrap default .row
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.card-header {
+  background-color: #e6eaec;
+}
+
+.card-header-login {
+  background-color: #fff;
+  background-color: #fff;
+  border-bottom: 0;
+  padding: 35px;
+}
+
+.material-icons.md-12 { font-size: 12px; }
+.material-icons.md-14 { font-size: 14px; }
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-22 { font-size: 22px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+button.btn {
+  color: #f8f9fa;
+}
+
+.stat-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#user-counts {
+  border-left: 3px solid blue;
+}

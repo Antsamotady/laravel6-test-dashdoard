@@ -1,0 +1,25 @@
+.btn-breadcrumb {
+  background-image: url('img/left-arrow.png');
+  background-size: cover;
+  border: none;
+  width: 195px;
+  height: 49px;
+
+  text-align: center;
+  line-height: 49px;
+}
+
+.btn-breadcrumb-current, .btn-breadcrumb-tab {
+  background-image: url('img/right-arrow.png');
+  background-size: cover;
+  border: none;
+  width: 200px;
+  height: 49px;
+
+  text-align: center;
+  line-height: 49px;
+}
+
+.btn-breadcrumb a {
+  text-decoration: none;
+}
