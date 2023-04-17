@@ -9,11 +9,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="header">HEADER</div>
     <div class="container">
+        <div class="header">HEADER</div>
         @yield('content')
+        <div class="footer">FOOTER</div>
     </div>
-    <div class="footer">FOOTER</div>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 </body>
