@@ -35,4 +35,5 @@ class DashboardController extends Controller
     {
         return view('dashboard_menu3');
     }
+
 }
