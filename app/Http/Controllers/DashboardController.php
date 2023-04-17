@@ -8,32 +8,32 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard_index');
+        return view('dashboard.index');
     }
 
     public function menu1()
     {
-        return view('dashboard_menu1');
+        return view('dashboard.menu1');
     }
 
     public function menu2()
     {
-        return view('dashboard_menu2');
+        return view('dashboard.menu2');
     }
 
     public function menu2Submenu1()
     {
-        return view('dashboard_menu2_submenu1');
+        return view('dashboard.submenu.menu2_submenu1');
     }
 
     public function menu2Submenu2()
     {
-        return view('dashboard_menu2_submenu2');
+        return view('dashboard.submenu.menu2_submenu2');
     }
 
     public function menu3()
     {
-        return view('dashboard_menu3');
+        return view('dashboard.menu3');
     }
 
 }
