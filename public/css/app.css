@@ -10964,7 +10964,7 @@ a.text-dark:focus {
   border-bottom: none;
 }
 
-.left-menu .card:focus-visible {
-  border-left: 2px solid greenyellow;
+.left-menu .card.active {
+  border-left: 3px solid var(--primary);
 }
 

@@ -12,7 +12,11 @@
             </div>
             <div class="col-12">
                 <div class="accordion" id="accordionExample">
+                @if(Route::is('dashboard.menu1'))
+                    <div class="card active">
+                @else
                     <div class="card">
+                @endif
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
                                 <a href="{{ route('dashboard.menu1') }}">
@@ -25,7 +29,11 @@
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                         </div>
                     </div>
+                @if(Route::is('dashboard.menu2') || Route::is('dashboard.menu2Submenu1') || Route::is('dashboard.menu2Submenu2'))
+                    <div class="card active">
+                @else
                     <div class="card">
+                @endif
                         <div class="card-header" id="headingTwo">
                             <h2 class="mb-0">
                                 <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -40,12 +48,18 @@
                             </div>
                         </div>
                     </div>
+                @if(Route::is('dashboard.menu3'))
+                    <div class="card active">
+                @else
                     <div class="card">
+                @endif
                         <div class="card-header" id="headingThree">
                             <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    <a href="{{ route('dashboard.menu3') }}">Menu 3</a>
-                                </button>
+                                <a href="{{ route('dashboard.menu3') }}">
+                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Menu 3
+                                    </button>
+                                </a>
                             </h2>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
