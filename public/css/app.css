@@ -10932,3 +10932,8 @@ a.text-dark:focus {
   }
 }
 
+.left-menu {
+  color: aquamarine;
+  text-transform: capitalize;
+}
+
