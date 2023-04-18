@@ -1,0 +1,12 @@
+.breadcrumb {
+  background-color: transparent;
+
+  .breadcrumb-item {
+    background-image: url('./images/left-arrow.png');background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+  .breadcrumb-item.active {
+    background-image: url('./images/right-arrow.png');
+  }
+}

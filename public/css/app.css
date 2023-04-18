@@ -10968,3 +10968,18 @@ a.text-dark:focus {
   border-left: 3px solid var(--primary);
 }
 
+.breadcrumb {
+  background-color: transparent;
+}
+
+.breadcrumb .breadcrumb-item {
+  background-image: url(/images/left-arrow.png?795566a8d19ee4c5fcc337eb82b78d60);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.breadcrumb .breadcrumb-item.active {
+  background-image: url(/images/right-arrow.png?c890c80489b4de2db31edf47e54add64);
+}
+
