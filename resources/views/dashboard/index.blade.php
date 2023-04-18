@@ -12,17 +12,19 @@
             </div>
             <div class="col-12">
                 <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <a href="{{ route('dashboard.menu1') }}">Menu 1</a>
-                                </button>
-                            </h2>
+                    <a href="{{ route('dashboard.menu1') }}">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Menu 1
+                                        </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            </div>
                         </div>
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        </div>
-                    </div>
+                    </a>
                     <div class="card">
                         <div class="card-header" id="headingTwo">
                             <h2 class="mb-0">

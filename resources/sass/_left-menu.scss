@@ -1,0 +1,25 @@
+.left-menu {
+  a {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .card {
+    margin-bottom: 0.5rem;
+    border-radius: 0;
+    border: 0;
+  }
+  .btn-link:hover {
+    text-decoration: none;
+  }
+  .btn:hover {
+    text-decoration: none;
+  }
+  .btn-link:focus, .btn-link.focus {
+    text-decoration: none;
+  }
+  .btn:focus, .btn.focus {
+    box-shadow: none;
+  }
+  .card-header {
+    border-bottom: none;
+  }
+}

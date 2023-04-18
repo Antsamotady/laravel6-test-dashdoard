@@ -10932,8 +10932,39 @@ a.text-dark:focus {
   }
 }
 
-.left-menu {
-  color: aquamarine;
-  text-transform: capitalize;
+.left-menu a {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.left-menu .card {
+  margin-bottom: 0.5rem;
+  border-radius: 0;
+  border: 0;
+}
+
+.left-menu .btn-link:hover {
+  text-decoration: none;
+}
+
+.left-menu .btn:hover {
+  text-decoration: none;
+}
+
+.left-menu .btn-link:focus,
+.left-menu .btn-link.focus {
+  text-decoration: none;
+}
+
+.left-menu .btn:focus,
+.left-menu .btn.focus {
+  box-shadow: none;
+}
+
+.left-menu .card-header {
+  border-bottom: none;
+}
+
+.left-menu .card:focus-visible {
+  border-left: 2px solid greenyellow;
 }
 
