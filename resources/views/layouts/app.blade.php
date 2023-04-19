@@ -9,6 +9,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <div id="app">
+    @auth
     <div class="container">
         <div class="header">
             <ul class="nav justify-content-between">
@@ -16,7 +18,14 @@
                     <a class="nav-link" href="{{ route('welcome') }}">LOGO</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled">Déconnexion</a>
+                    <a class="dropdown-item mr-sm-2 d-flex align-items-center" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        <span>{{ __('Déconnexion') }}&nbsp;</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    </form>
                 </li>
             </ul>
         </div>
@@ -50,6 +59,15 @@
             <div class="nav">FOOTER</div>
         </div>
     </div>
+
+    </div>
+    
+    @endauth
+    
+    @yield('content-login')
+    @yield('content-email')
+    @yield('content-reset')
+
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
 </body>

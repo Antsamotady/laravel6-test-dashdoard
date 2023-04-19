@@ -1,0 +1,28 @@
+.login {
+  width: 100%;
+  height: 100vh;
+
+  background-color: #191f28;
+}
+
+.bg-right {
+  background-image: url("images/login-right.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+
+  width: 75%;
+  order: 1;
+}
+
+.bg-left {
+  background-image: url("images/login-left.jpg");
+  width: 25%;
+}
+
+
+.login-form {
+  position: absolute;
+  left: 8rem;
+}

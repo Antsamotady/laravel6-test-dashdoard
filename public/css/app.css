@@ -10983,3 +10983,29 @@ a.text-dark:focus {
   background-image: url(/images/right-arrow.png?c890c80489b4de2db31edf47e54add64);
 }
 
+.login {
+  width: 100%;
+  height: 100vh;
+  background-color: #191f28;
+}
+
+.bg-right {
+  background-image: url(/images/login-right.png?7520e8285bc7168120f1f81b5b703687);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 75%;
+  order: 1;
+}
+
+.bg-left {
+  background-image: url(/images/login-left.jpg?49c9d0aae16fa88eaf431241531031f7);
+  width: 25%;
+}
+
+.login-form {
+  position: absolute;
+  left: 8rem;
+}
+

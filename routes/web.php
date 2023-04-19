@@ -1,6 +1,9 @@
 <?php
 
+Auth::routes();
+
 Route::get('/', 'HomeController@index')->name('welcome');
+Route::get('/home', 'HomeController@index')->name('welcome');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
 Route::get('/dashboard/menu1', 'DashboardController@menu1')->name('dashboard.menu1');
 Route::get('/dashboard/menu2', 'DashboardController@menu2')->name('dashboard.menu2');
