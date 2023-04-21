@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
     public function menu1()
     {
-        return view('dashboard.menu1');
+        return view('dashboard.list');
     }
 
     public function menu2()

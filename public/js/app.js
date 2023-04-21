@@ -35372,6 +35372,8 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./user_list */ "./resources/js/user_list.js");
+__webpack_require__(/*! ./search */ "./resources/js/search.js");
 
 /***/ }),
 
@@ -35395,6 +35397,50 @@ try {
   window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 } catch (e) {}
+
+/***/ }),
+
+/***/ "./resources/js/search.js":
+/*!********************************!*\
+  !*** ./resources/js/search.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).on('click', '.dropdown-item-status', function (event) {
+  var clickedItemValue = $(event.target).text();
+  $('#inlineFormInputGroup').val(clickedItemValue);
+});
+
+/***/ }),
+
+/***/ "./resources/js/user_list.js":
+/*!***********************************!*\
+  !*** ./resources/js/user_list.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).on('click', '.toggle-status', function () {
+  var url = $(this).data('action');
+  $.ajax({
+    method: 'POST',
+    url: url,
+    data: {},
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(data) {
+      toggleCheckBox(data);
+    }
+  });
+});
+function toggleCheckBox(data) {
+  var mySelector = '#toggle-status-txt-' + data.id;
+  var actifChkBox = $('<span id="toggle-status-txt-' + data.id + '" class="font-weight-bolder" style="color: #5cb85c;">ACTIF</span>');
+  var inactifChkBox = $('<span id="toggle-status-txt-' + data.id + '" class="font-weight-bolder" style="color: #fe794e";">INACTIF</span>');
+  if (data.status == 'Actif') $(mySelector).replaceWith(actifChkBox);else $(mySelector).replaceWith(inactifChkBox);
+}
 
 /***/ }),
 

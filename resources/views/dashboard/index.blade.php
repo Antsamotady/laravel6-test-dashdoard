@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row left-menu">
-        <div class="col-3">
+    <div class="row">
+        <div class="col-3 left-menu">
             <div class="col-12 mb-4">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -12,14 +12,14 @@
             </div>
             <div class="col-12">
                 <div class="accordion" id="accordionExample">
-                @if(Route::is('dashboard.menu1'))
+                @if(Route::is('dashboard.list'))
                     <div class="card active">
                 @else
                     <div class="card">
                 @endif
                         <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
-                                <a href="{{ route('dashboard.menu1') }}">
+                                <a href="{{ route('dashboard.list') }}">
                                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         Menu 1
                                     </button>

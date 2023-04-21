@@ -1,8 +1,16 @@
-// Bootstrap
+@import 'variables';
+
 @import '~bootstrap/scss/bootstrap';
+@import '~material-icons/iconfont/material-icons.css';
+
+@import 'commons';
 
 @import 'left-menu';
 
 @import 'breadcrumb';
 
 @import 'login-form';
+
+@import 'user-list';
+
+@import 'toggle_switch';
