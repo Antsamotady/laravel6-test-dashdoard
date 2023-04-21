@@ -58,7 +58,6 @@
             success:function(data){
                 $('.user-list').html(data);
             }
-
         });
     });
 </script>

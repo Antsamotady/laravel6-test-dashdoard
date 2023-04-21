@@ -73,5 +73,21 @@
         <div class="col-9">
             @yield('menu-content')
         </div>
+
+        <script type="text/javascript">
+            var name = "";
+            var status = "";
+
+            window.onload = function() {
+                $.ajax({
+                    type : 'get',
+                    url : '{{ URL::to("dashboard/search") }}',
+                    data:{'name':name, 'status':status},
+                    success:function(data){
+                        $('.user-list').html(data);
+                    }
+                });
+            }
+        </script>
     </div>
 @endsection
