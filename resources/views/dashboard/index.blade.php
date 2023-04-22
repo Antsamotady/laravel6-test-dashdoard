@@ -55,11 +55,9 @@
                 @endif
                         <div class="card-header" id="headingThree">
                             <h2 class="mb-0">
-                                <a href="{{ route('dashboard.menu3') }}">
-                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Menu 3
-                                    </button>
-                                </a>
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" id="menu3-btn">
+                                    Menu 3
+                                </button>
                             </h2>
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
@@ -71,7 +69,9 @@
 
         <!-- Main content -->
         <div class="col-9">
-            @yield('menu-content')
+            <div class="menu-content">
+                @yield('menu-content')
+            </div>
         </div>
 
         <script type="text/javascript">
@@ -88,6 +88,16 @@
                     }
                 });
             }
+
+            $(document).on('click', '#menu3-btn', function(){
+                $.ajax({
+                    type : 'get',
+                    url : '{{ URL::to("dashboard/menu3") }}',
+                    success:function(data){
+                        $('.menu-content').replaceWith(data);
+                    }
+                });
+            });
         </script>
     </div>
 @endsection

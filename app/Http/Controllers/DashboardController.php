@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class DashboardController extends Controller
 {
     /**
@@ -39,9 +41,15 @@ class DashboardController extends Controller
         return view('dashboard.submenu.menu2_submenu2');
     }
 
-    public function menu3()
+    public function menu3(Request $request)
     {
-        return view('dashboard.menu3');
+        if($request->ajax()) {
+            $output="";
+
+            $output .= '<h1>NEW Menu3</h1>'.
+            '<p>Bienvenue sur le new menu3.</p>';
+        }
+        return Response($output);
     }
 
 }
