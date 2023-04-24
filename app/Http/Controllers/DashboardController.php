@@ -43,13 +43,11 @@ class DashboardController extends Controller
 
     public function menu3(Request $request)
     {
-        if($request->ajax()) {
-            $output="";
-
-            $output .= '<h1>NEW Menu3</h1>'.
-            '<p>Bienvenue sur le new menu3.</p>';
+        if ($request->ajax()) {
+            $output = view('dashboard.pseudo-menu3')->render();
+            return response($output);
         }
-        return Response($output);
+        return redirect()->route('dashboard');
     }
 
 }
