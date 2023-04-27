@@ -8,17 +8,17 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: travellist
-    container_name: travellist-app
+    container_name: laravel-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
     networks:
-      - travellist
+      - nginx-proxy
 
   db:
     image: mysql:8.0
-    container_name: travellist-db
+    container_name: laravel-db
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -28,28 +28,24 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./db-data:/var/lib/mysql
     networks:
-      - travellist
+      - nginx-proxy
 
   nginx:
     image: nginx:1.17-alpine
-    container_name: travellist-nginx
+    container_name: laravel-nginx
     restart: unless-stopped
     ports:
-      - 8000:80
+      - 8002:80
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
-      - travellist
-
-
-
-
+      - nginx-proxy
 
 networks:
-  travellist:
-    driver: bridge
-
+    nginx-proxy:
+        external:
+            name: nginx-proxy
   
