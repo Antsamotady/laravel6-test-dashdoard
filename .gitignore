@@ -3,6 +3,8 @@
 /public/storage
 /storage/*.key
 /vendor
+/db-data
+/public/images
 
 .env
 .env.example
