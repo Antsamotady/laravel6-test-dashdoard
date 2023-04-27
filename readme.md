@@ -1,4 +1,4 @@
-# Travellist - Laravel Demo App
+# Antsamotady - Laravel Demo App
 
 This is a Laravel demo application.
 
