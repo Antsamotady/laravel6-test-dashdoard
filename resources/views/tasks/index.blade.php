@@ -19,11 +19,10 @@
 
                         @foreach($tasks as $task)
                             <div class="card mb-2" id="task_{{ $task->id }}">
-                                <div class="card-header">{{ $task->name }}</div>
+                                <div class="card-header">Priority: #{{ $task->priority }}</div>
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-around align-items-center">
-                                        <p>Task: {{ $task->name }}</p>
-                                        <p>Priority: {{ $task->priority }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p>{{ $task->name }}</p>
                                         <div class="d-flex justify-content-around align-items-center">
                                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary">Edit</a>
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">

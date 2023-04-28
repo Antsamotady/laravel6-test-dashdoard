@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use Illuminate\Http\Request;
-use Facade\Ignition\Tabs\Tab;
 use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
@@ -28,7 +27,7 @@ class TaskController extends Controller
     public function create()
     {
         $task = new Task;
-        $task->priority = Task::count() + 1; // Set priority to the lowest available
+        $task->priority = Task::count() + 1;
         return view('tasks.create', compact('task'));
     }
 
@@ -41,7 +40,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:100',
         ]);
         Task::create([
             'name' => $request->input('name'),
@@ -72,25 +71,19 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        // Get the old priority of the task
         $oldPriority = $task->priority;
 
-        // Validate the request data
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:100',
             'priority' => 'required|integer|min:1'
         ]);
 
-        // Get the new priority from the request
         $newPriority = $validatedData['priority'];
 
-        // Get the total number of tasks
         $totalTasks = Task::count();
 
-        // Make sure the new priority is within the valid range
         $newPriority = max(1, min($newPriority, $totalTasks));
 
-        // If the new priority is different from the old priority, update the priority of all tasks accordingly
         if ($newPriority != $oldPriority) {
             if ($newPriority > $oldPriority) {
                 Task::where('priority', '>', $oldPriority)
@@ -103,10 +96,8 @@ class TaskController extends Controller
             }
         }
 
-        // Update the task with the new data
         $task->update($validatedData);
 
-        // Redirect to the index page with a success message
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 
@@ -151,7 +142,6 @@ class TaskController extends Controller
         $priority = $task->priority;
         $task->delete();
 
-        // Shift all tasks with priority > $priority down by 1
         Task::where('priority', '>', $priority)->update(['priority' => DB::raw('priority - 1')]);
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
