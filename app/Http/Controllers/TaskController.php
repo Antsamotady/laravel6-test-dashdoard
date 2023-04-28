@@ -59,7 +59,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        return view('tasks.edit', compact('task'));
+        $totalTasks = Task::count();
+        return view('tasks.edit', compact('task', 'totalTasks'));
     }
 
     /**
@@ -109,6 +110,33 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 
+    public function updateAjax(Request $request, Task $task)
+    {
+        $validatedData = $request->validate([
+            'priority' => 'required|integer|min:1',
+        ]);
+
+        $newPriority = $validatedData['priority'];
+
+        $totalTasks = Task::count();
+        $newPriority = max(1, min($newPriority, $totalTasks));
+
+        if ($newPriority != $task->priority) {
+            if ($newPriority > $task->priority) {
+                Task::where('priority', '>', $task->priority)
+                    ->where('priority', '<=', $newPriority)
+                    ->decrement('priority');
+            } else {
+                Task::where('priority', '>=', $newPriority)
+                    ->where('priority', '<', $task->priority)
+                    ->increment('priority');
+            }
+
+            $task->update(['priority' => $newPriority]);
+        }
+
+        return response()->json(['success' => true]);
+    }
 
 
 

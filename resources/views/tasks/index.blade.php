@@ -22,13 +22,16 @@
                                 <div class="card-header">{{ $task->name }}</div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-around align-items-center">
+                                        <p>Task: {{ $task->name }}</p>
                                         <p>Priority: {{ $task->priority }}</p>
-                                        <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                        <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
+                                        <div class="d-flex justify-content-around align-items-center">
+                                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary">Edit</a>
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -52,14 +55,14 @@
                         if(value) {
                             var id = value.split("_")[1];
                             $.ajax({
-                                url: '/tasks/' + id,
+                                url: '/tasks/ajax/' + id,
                                 method: 'PUT',
                                 data: {
                                     priority: i,
                                     _token: "{{ csrf_token() }}"
                                 },
                                 success: function (response) {
-                                    console.log(response);
+                                    window.location.href = '/';
                                 }
                             });
                             i++;

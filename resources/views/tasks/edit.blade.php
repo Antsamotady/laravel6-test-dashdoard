@@ -20,7 +20,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="priority">Priority</label>
-                                <input type="number" class="form-control @error('priority') is-invalid @enderror" id="priority" name="priority" value="{{ $task->priority }}" required>
+                                <select class="form-control @error('priority') is-invalid @enderror" id="priority" name="priority" required>
+                                    @for($i=1; $i<=$totalTasks; $i++)
+                                        <option value="{{ $i }}" {{ $i == $task->priority ? 'selected' : '' }}>{{ $i }}</option>
+                                    @endfor
+                                </select>
                                 @error('priority')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
