@@ -53,6 +53,11 @@ To run this project, you will need to have PHP 7.2 or higher installed on your m
 
 9. Access the application by visiting `http://localhost:8000` in your web browser.
 
+
+## Run tests
+```
+$ vendor/bin/phpunit tests/Feature/TaskTest.php
+```
 ## Deployment
 
 To deploy this application, you can follow the same steps as the installation process above. However, you will need to configure your server environment and update the `.env` file with your production database credentials.
