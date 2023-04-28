@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Task;
-use Facade\Ignition\Tabs\Tab;
 use Illuminate\Http\Request;
+use Facade\Ignition\Tabs\Tab;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -26,7 +27,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $task = new Task;
+        $task->priority = Task::count() + 1; // Set priority to the lowest available
+        return view('tasks.create', compact('task'));
     }
 
     /**
@@ -68,31 +71,45 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
+        // Get the old priority of the task
+        $oldPriority = $task->priority;
+
+        // Validate the request data
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'priority' => 'required|integer',
+            'priority' => 'required|integer|min:1'
         ]);
 
-        if ($validatedData['priority'] != $request->input('current_priority')) {
-            // priority has changed, so update other task priorities
-            $tasks = Task::orderBy('priority')->get();
-            foreach ($tasks as $t) {
-                if ($t->id == $task->id) {
-                    continue; // skip the current task being edited
-                }
-                if ($t->priority >= $validatedData['priority']) {
-                    $t->priority += 1;
-                    $t->save();
-                }
+        // Get the new priority from the request
+        $newPriority = $validatedData['priority'];
+
+        // Get the total number of tasks
+        $totalTasks = Task::count();
+
+        // Make sure the new priority is within the valid range
+        $newPriority = max(1, min($newPriority, $totalTasks));
+
+        // If the new priority is different from the old priority, update the priority of all tasks accordingly
+        if ($newPriority != $oldPriority) {
+            if ($newPriority > $oldPriority) {
+                Task::where('priority', '>', $oldPriority)
+                    ->where('priority', '<=', $newPriority)
+                    ->decrement('priority');
+            } else {
+                Task::where('priority', '>=', $newPriority)
+                    ->where('priority', '<', $oldPriority)
+                    ->increment('priority');
             }
         }
 
-        $task->name = $validatedData['name'];
-        $task->priority = $validatedData['priority'];
-        $task->save();
+        // Update the task with the new data
+        $task->update($validatedData);
 
-        return redirect()->route('tasks.index');
+        // Redirect to the index page with a success message
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
+
+
 
 
     /**
@@ -103,8 +120,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        $priority = $task->priority;
         $task->delete();
 
-        return redirect()->route('tasks.index');
+        // Shift all tasks with priority > $priority down by 1
+        Task::where('priority', '>', $priority)->update(['priority' => DB::raw('priority - 1')]);
+
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
 }

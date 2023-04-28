@@ -7,9 +7,18 @@
                 <div class="card">
                     <div class="card-header">{{ __('Task List') }}</div>
 
-                    <div class="card-body">
+                    <div class="card-body sortable-item">
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
                         @foreach($tasks as $task)
-                            <div class="card mb-2">
+                            <div class="card mb-2" id="task_{{ $task->id }}">
                                 <div class="card-header">{{ $task->name }}</div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-around align-items-center">
@@ -32,4 +41,33 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $(".sortable-item").sortable({
+                handle: ".card-header",
+                update: function (event, ui) {
+                    var data = $(this).sortable('toArray', {attribute: 'id'});
+                    var i = 1;
+                    $.each(data, function (key, value) {
+                        if(value) {
+                            var id = value.split("_")[1];
+                            $.ajax({
+                                url: '/tasks/' + id,
+                                method: 'PUT',
+                                data: {
+                                    priority: i,
+                                    _token: "{{ csrf_token() }}"
+                                },
+                                success: function (response) {
+                                    console.log(response);
+                                }
+                            });
+                            i++;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 @endsection
