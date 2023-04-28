@@ -5,4 +5,3 @@ Route::get('/', function () {
 });
 
 Route::get('/here', 'ApiController@getUsers');
-
