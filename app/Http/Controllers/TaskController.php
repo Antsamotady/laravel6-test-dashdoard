@@ -71,31 +71,12 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $oldPriority = $task->priority;
-
         $validatedData = $request->validate([
             'name' => 'required|max:100',
             'priority' => 'required|integer|min:1'
         ]);
 
-        $newPriority = $validatedData['priority'];
-
-        $totalTasks = Task::count();
-
-        $newPriority = max(1, min($newPriority, $totalTasks));
-
-        if ($newPriority != $oldPriority) {
-            if ($newPriority > $oldPriority) {
-                Task::where('priority', '>', $oldPriority)
-                    ->where('priority', '<=', $newPriority)
-                    ->decrement('priority');
-            } else {
-                Task::where('priority', '>=', $newPriority)
-                    ->where('priority', '<', $oldPriority)
-                    ->increment('priority');
-            }
-        }
-
+        $this->rearrangePriority($validatedData, $task);
         $task->update($validatedData);
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
@@ -107,29 +88,11 @@ class TaskController extends Controller
             'priority' => 'required|integer|min:1',
         ]);
 
-        $newPriority = $validatedData['priority'];
-
-        $totalTasks = Task::count();
-        $newPriority = max(1, min($newPriority, $totalTasks));
-
-        if ($newPriority != $task->priority) {
-            if ($newPriority > $task->priority) {
-                Task::where('priority', '>', $task->priority)
-                    ->where('priority', '<=', $newPriority)
-                    ->decrement('priority');
-            } else {
-                Task::where('priority', '>=', $newPriority)
-                    ->where('priority', '<', $task->priority)
-                    ->increment('priority');
-            }
-
-            $task->update(['priority' => $newPriority]);
-        }
+        $this->rearrangePriority($validatedData, $task);
+        $task->update($validatedData);
 
         return response()->json(['success' => true]);
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -146,4 +109,24 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
+
+    private function rearrangePriority($validatedData, $task) {
+        $oldPriority = $task->priority;
+        $newPriority = $validatedData['priority'];
+        $totalTasks = Task::count();
+        $newPriority = max(1, min($newPriority, $totalTasks));
+
+        if ($newPriority != $oldPriority) {
+            if ($newPriority > $oldPriority) {
+                Task::where('priority', '>', $oldPriority)
+                    ->where('priority', '<=', $newPriority)
+                    ->decrement('priority');
+            } else {
+                Task::where('priority', '>=', $newPriority)
+                    ->where('priority', '<', $oldPriority)
+                    ->increment('priority');
+            }
+        }
+    }
+
 }

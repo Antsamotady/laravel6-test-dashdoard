@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Task List') }}</div>
+                    <div class="card-header text-center">{{ __('Task List') }}</div>
 
                     <div class="card-body sortable-item">
                         @if(session('success'))
@@ -19,7 +19,7 @@
 
                         @foreach($tasks as $task)
                             <div class="card mb-2" id="task_{{ $task->id }}">
-                                <div class="card-header">Priority: #{{ $task->priority }}</div>
+                                <div class="card-header card-header-target">Priority: #{{ $task->priority }}</div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <p>{{ $task->name }}</p>
@@ -46,7 +46,7 @@
     <script>
         $(document).ready(function () {
             $(".sortable-item").sortable({
-                handle: ".card-header",
+                handle: ".card-header-target",
                 update: function (event, ui) {
                     var data = $(this).sortable('toArray', {attribute: 'id'});
                     var i = 1;
