@@ -79,7 +79,7 @@
                                     _token: "{{ csrf_token() }}"
                                 },
                                 success: function (response) {
-                                    window.location.href = '/';
+                                    window.location.href = '/?project_id=' + {{ $task->project_id }};
                                 }
                             });
                             i++;
