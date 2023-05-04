@@ -5,7 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header text-center">{{ __('Task List') }}</div>
+                    <div class="card-header d-flex justify-content-between">
+                        <span class="card-title_">{{ __('Task List') }}</span>
+                        <a href="{{ route('projects.index') }}">Project list</a>
+                    </div>
 
                     <div class="card-body sortable-item">
                         @if(session('success'))
@@ -17,25 +20,40 @@
                             </div>
                         @endif
 
+                        <div class="mb-3">
+                            <form method="GET" action="{{ route('tasks.index') }}">
+                                {{-- <label for="project_id">{{ __('Filter by Project') }}</label> --}}
+                                <select class="form-control" name="project_id" id="project_id" onchange="this.form.submit()">
+                                    <option value="">{{ __('All Projects') }}</option>
+                                    @foreach ($projects as $project)
+                                        <option value="{{ $project->id }}" @if ($project->id == request('project_id')) selected @endif>{{ $project->name }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+
                         @foreach($tasks as $task)
                             <div class="card mb-2" id="task_{{ $task->id }}">
-                                <div class="card-header card-header-target">Priority: #{{ $task->priority }}</div>
+                                <div class="card-header card-header-target">
+                                    <span>Priority: #{{ $task->priority }}</span>
+                                    <span>.. {{ $task->project_id }}</span>
+                                </div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <p>{{ $task->name }}</p>
                                         <div class="d-flex justify-content-around align-items-center">
-                                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary">Edit</a>
+                                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-                        <div class="mt-2">
+                        <div class="mt-2 text-center">
                             <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm">Add Task</a>
                         </div>
                     </div>

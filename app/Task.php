@@ -9,6 +9,7 @@ class Task extends Model
     protected $fillable = [
         'name',
         'priority',
+        'project_id'
     ];
 
     public function save(array $options = [])
@@ -27,5 +28,10 @@ class Task extends Model
         }
 
         parent::save($options);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,10 +14,18 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::orderBy('priority')->get();
-        return view('tasks.index', compact('tasks'));
+        $projectId = $request->input('project_id');
+        $tasks = Task::query();
+
+        if ($projectId) {
+            $tasks->where('project_id', $projectId);
+        }
+        $tasks = $tasks->orderBy('priority')->get();
+        $projects = Project::all();
+
+        return view('tasks.index', compact('projects', 'tasks'));
     }
 
     /**
@@ -28,8 +37,10 @@ class TaskController extends Controller
     {
         $task = new Task;
         $task->priority = Task::count() + 1;
-        return view('tasks.create', compact('task'));
+        $projects = Project::all();
+        return view('tasks.create', compact('task', 'projects'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -41,10 +52,13 @@ class TaskController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:100',
+            'project_id' => 'required|exists:projects,id'
         ]);
+
         Task::create([
             'name' => $request->input('name'),
             'priority' => Task::count() + 1,
+            'project_id' => $request->input('project_id')
         ]);
 
         return redirect()->route('tasks.index');

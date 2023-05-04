@@ -30,7 +30,10 @@
                                 @enderror
                             </div>
                             <input type="hidden" name="current_priority" value="{{ $task->priority }}">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <a href="{{ url()->previous() }}">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -5,29 +5,20 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Add Task</div>
+                    <div class="card-header">Create Project</div>
 
                     <div class="card-body">
-                        <form action="{{ route('tasks.store') }}" method="POST">
+                        <form action="{{ route('projects.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="project_id">Project</label>
-                                <select class="form-control" id="project_id" name="project_id">
-                                    <option value="">Select a project</option>
-                                    @foreach ($projects as $project)
-                                        <option value="{{ $project->id }}">{{ $project->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Task Name</label>
+                                <label for="name">Project Name</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn btn-primary">Create</button>
                                 <a href="{{ url()->previous() }}">Cancel</a>
                             </div>
                         </form>
