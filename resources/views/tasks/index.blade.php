@@ -42,10 +42,13 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p>{{ $task->name }}</p>
                                             <div class="d-flex justify-content-around align-items-center">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="completed" name="completed" value="1" {{ $task->is_completed ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="completed"></label>
-                                                </div>
+                                                <input type="checkbox"
+                                                    class="toggle-complete-task"
+                                                    id="completed"
+                                                    name="completed"
+                                                    data-action="/tasks/toggle/{{ $task->id }}"
+                                                    {{ $task->is_completed ? 'checked' : '' }}
+                                                >
 
                                                 <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
@@ -114,17 +117,28 @@
                                 i++;
                             }
                         });
-
                     }
-
-
-
-
-
-
                 }
             });
         });
+
+        $(document).on('click', '.toggle-complete-task', function () {
+            let url = $(this).data('action');
+
+            $.ajax({
+                method: 'post',
+                url: url,
+                data: {},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    console.log('yessssssssss!');
+                }
+            });
+        });
+
+
     </script>
 
 @endsection

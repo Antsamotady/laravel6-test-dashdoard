@@ -134,6 +134,17 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
 
+    public function toggle($id)
+    {
+        $task = Task::find($id);
+        $task->is_completed = ($task->is_completed) ? 0 : 1;
+        $task->save();
+
+        return response()->json(['success' => true]);
+    }
+
+
+
     private function rearrangePriority($validatedData, $task) {
         $oldPriority = $task->priority;
         $newPriority = $validatedData['priority'];
