@@ -61,7 +61,7 @@ class TaskController extends Controller
             'project_id' => $request->input('project_id')
         ]);
 
-        return redirect()->route('tasks.index');
+        return redirect()->route('tasks.index')->with('success', 'Task created succesfully!');
     }
 
     /**
