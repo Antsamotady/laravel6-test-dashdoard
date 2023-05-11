@@ -41,14 +41,15 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p>{{ $task->name }}</p>
-                                            <div class="d-flex justify-content-around align-items-center">
+                                            <div class="d-flex justify-content-around align-items-center target-chekbox">
                                                 <input type="checkbox"
+                                                    id="chk_{{ $task->id }}"
                                                     class="toggle-complete-task"
-                                                    id="completed"
-                                                    name="completed"
+                                                    name="chk_{{ $task->id }}"
                                                     data-action="/tasks/toggle/{{ $task->id }}"
                                                     {{ $task->is_completed ? 'checked' : '' }}
-                                                >
+                                                />
+                                                <label for="chk_{{ $task->id }}">complete</label>
 
                                                 <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">

@@ -1,3 +1,24 @@
+:root {
+    --primary-color:        #6a84c1;
+    --secondary-color:      #7d7a7a;
+    --success-color:        #557859;
+    --danger-color:         #6c2a2a;
+    --light-color:          #00f000;
+    --txt-color:            #2b372b;
+}
+.btn-primary {
+    background-color:       var(--primary-color);
+    border-color:           var(--primary-color);
+}
+.btn-success {
+    border-color:           var(--success-color);
+    background-color:       var(--success-color);
+}
+.btn-danger {
+    border-color:           var(--danger-color);
+    background-color:       var(--danger-color);
+}
+
 .card-title_ {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.2rem;
