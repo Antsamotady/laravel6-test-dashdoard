@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeysToTasksTable extends Migration
+class AddIsCompletedToTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddForeignKeysToTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->unsignedBigInteger('project_id');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->boolean('is_completed')->default(false);
         });
     }
 
@@ -27,7 +26,7 @@ class AddForeignKeysToTasksTable extends Migration
     public function down()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            $table->dropColumn('is_completed');
         });
     }
 }

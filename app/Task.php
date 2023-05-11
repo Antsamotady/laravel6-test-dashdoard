@@ -9,7 +9,8 @@ class Task extends Model
     protected $fillable = [
         'name',
         'priority',
-        'project_id'
+        'project_id',
+        'is_completed'
     ];
 
     public function save(array $options = [])

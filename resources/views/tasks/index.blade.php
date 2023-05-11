@@ -42,6 +42,11 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <p>{{ $task->name }}</p>
                                             <div class="d-flex justify-content-around align-items-center">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="completed" name="completed" value="1" {{ $task->is_completed ? 'checked' : '' }}>
+                                                    <label class="custom-control-label" for="completed"></label>
+                                                </div>
+
                                                 <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                                 <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
                                                     @csrf
