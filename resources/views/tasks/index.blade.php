@@ -10,7 +10,7 @@
                         <a href="{{ route('projects.index') }}">Project list</a>
                     </div>
 
-                    <div class="card-body sortable-item">
+                    <div class="card-body">
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('success') }}
@@ -31,28 +31,29 @@
                                 </select>
                             </form>
                         </div>
-
-                        @foreach($tasks as $task)
-                            <div class="card mb-2" id="task_{{ $task->id }}">
-                                <div class="card-header card-header-target">
-                                    <span>Priority: #{{ $task->priority }}</span>
-                                    <span>.. {{ $task->project_id }}</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p>{{ $task->name }}</p>
-                                        <div class="d-flex justify-content-around align-items-center">
-                                            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                            </form>
+                        <div class="sortable-item">
+                            @foreach($tasks as $task)
+                                <div class="card mb-2 eleStuff" id="task_{{ $task->id }}">
+                                    <div class="card-header card-header-target">
+                                        <span>Priority: #{{ $task->priority }}</span>
+                                        <span>.. {{ $task->project_id }}</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p>{{ $task->name }}</p>
+                                            <div class="d-flex justify-content-around align-items-center">
+                                                <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                         <div class="mt-2 text-center">
                             <a href="{{ route('tasks.create') }}" class="btn btn-success btn-sm">Add Task</a>
                         </div>
@@ -63,28 +64,59 @@
     </div>
     <script>
         $(document).ready(function () {
+
             $(".sortable-item").sortable({
                 handle: ".card-header-target",
                 update: function (event, ui) {
                     var data = $(this).sortable('toArray', {attribute: 'id'});
-                    var i = 1;
-                    $.each(data, function (key, value) {
-                        if(value) {
-                            var id = value.split("_")[1];
-                            $.ajax({
-                                url: '/tasks/ajax/' + id,
-                                method: 'PUT',
-                                data: {
-                                    priority: i,
-                                    _token: "{{ csrf_token() }}"
-                                },
-                                success: function (response) {
-                                    window.location.href = '/?project_id=' + {{ $task->project_id }};
-                                }
-                            });
-                            i++;
-                        }
-                    });
+                    var idSequence = data.join(',').replace(/task_/g, "");
+
+                    var currentUrl = $(location).attr('href');
+                    if (currentUrl.match(/project_id=\d+/)) {
+                        url = '/projects/tasks/ajax/' + {{ $task->project_id }} + '/' + idSequence;
+                        nextUrl = '/?project_id=' + {{ $task->project_id }};
+
+                        $.ajax({
+                            url: url,
+                            method: 'PUT',
+                            data: {
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function (response) {
+                                window.location.href = nextUrl;
+                            }
+                        });
+
+                    } else {
+                        var i = 1;
+
+                        $.each(data, function (key, value) {
+                            if(value) {
+                                var task = value.split("_")[1];
+                                url = '/tasks/ajax/' + task;
+
+                                $.ajax({
+                                    url: url,
+                                    method: 'PUT',
+                                    data: {
+                                        priority: i,
+                                        _token: "{{ csrf_token() }}"
+                                    },
+                                    success: function (response) {
+                                        window.location.href = '/';
+                                    }
+                                });
+                                i++;
+                            }
+                        });
+
+                    }
+
+
+
+
+
+
                 }
             });
         });

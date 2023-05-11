@@ -93,7 +93,7 @@ class TaskController extends Controller
         $this->rearrangePriority($validatedData, $task);
         $task->update($validatedData);
 
-        return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
+        return redirect('/?project_id=' . $task->project_id)->with('success', 'Task updated successfully.');
     }
 
     public function updateAjax(Request $request, Task $task)
@@ -106,6 +106,16 @@ class TaskController extends Controller
         $task->update($validatedData);
 
         return response()->json(['success' => true]);
+    }
+
+    public function updateProjectAjax($projectId, $idSequence)
+    {
+        $idSequenceArr = explode(",", $idSequence);
+        $tasks = Task::where('project_id', $projectId)->orderBy('priority')->get();
+
+        foreach($tasks as $key => $task) {
+            Task::where('id', (int)$idSequenceArr[$key])->update(['priority' => $task->priority]);
+        }
     }
 
     /**
