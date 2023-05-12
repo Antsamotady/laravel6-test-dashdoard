@@ -43,8 +43,8 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="show-completed-task-result"></div>
                         </div>
+                        <div class="show-completed-task-result"></div>
                         <div class="sortable-item">
                             @foreach($tasks as $task)
                                 <div class="card mb-2 eleStuff" id="task_{{ $task->id }}">
@@ -160,11 +160,12 @@
                 method: 'post',
                 data: {
                     _token: "{{ csrf_token() }}",
-                    completed: $(this).is(':checked') ? 1 : 0
+                    isChecked: $(this).is(':checked') ? 1 : 0
                 },
                 url: url,
                 success: function(data) {
                     $('.show-completed-task-result').html(data);
+                    $('.sortable-item').addClass('d-none');
                 }
             });
         });

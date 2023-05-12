@@ -158,21 +158,19 @@ class TaskController extends Controller
     public function showComplete(Request $request)
     {
         if($request->ajax()) {
-            $output = "";
-
-            $showCompleted = $request->input('completed');
+            $showCompleted = $request->input('isChecked');
             $tasks = Task::query();
 
             if ($showCompleted) {
                 $tasks->where('is_completed', true);
-                $output = "We have <strong>" . $tasks->count() . "</strong> finished tasks.";
             }
 
             $tasks = $tasks->get();
-            $projects = Project::all();
 
+            $output = view('tasks.select', compact('tasks'));
+
+            return response($output);
         }
-        return Response($output);
     }
 
     private function rearrangePriority($validatedData, $task) {
