@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -21,15 +20,30 @@
                         @endif
 
                         <div class="mb-3">
-                            <form method="GET" action="{{ route('tasks.index') }}">
-                                {{-- <label for="project_id">{{ __('Filter by Project') }}</label> --}}
-                                <select class="form-control" name="project_id" id="project_id" onchange="this.form.submit()">
-                                    <option value="">{{ __('All Projects') }}</option>
-                                    @foreach ($projects as $project)
-                                        <option value="{{ $project->id }}" @if ($project->id == request('project_id')) selected @endif>{{ $project->name }}</option>
-                                    @endforeach
-                                </select>
-                            </form>
+                            <div class="mt-2">
+                                <form method="GET" action="{{ route('tasks.index') }}">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <select class="form-control" name="project_id" id="project_id" onchange="this.form.submit()">
+                                                <option value="">{{ __('All Projects') }}</option>
+                                                @foreach ($projects as $project)
+                                                    <option value="{{ $project->id }}" @if ($project->id == request('project_id')) selected @endif>{{ $project->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-2 target-chekbox">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox"
+                                                    id="showCompleteTasks"
+                                                    data-action="/tasks/showComplete"
+                                                />
+                                                <label class="form-check-label" for="showCompleteTasks">completed</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="show-completed-task-result"></div>
                         </div>
                         <div class="sortable-item">
                             @foreach($tasks as $task)
@@ -70,7 +84,6 @@
                 </div>
             </div>
         </div>
-    </div>
     <script>
         $(document).ready(function () {
 
@@ -139,6 +152,22 @@
             });
         });
 
+        $(document).on('click', '#showCompleteTasks', function () {
+            let url = $(this).data('action');
+            console.log(url);
+
+            $.ajax({
+                method: 'post',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    completed: $(this).is(':checked') ? 1 : 0
+                },
+                url: url,
+                success: function(data) {
+                    $('.show-completed-task-result').html(data);
+                }
+            });
+        });
 
     </script>
 

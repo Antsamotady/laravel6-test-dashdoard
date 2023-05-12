@@ -19,6 +19,9 @@ class TaskController extends Controller
         $projectId = $request->input('project_id');
         $tasks = Task::query();
 
+        if ($request->has('completed')) {
+            $tasks->where('is_completed', 1);
+        }
         if ($projectId) {
             $tasks->where('project_id', $projectId);
         }
@@ -143,7 +146,25 @@ class TaskController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function showComplete(Request $request)
+    {
+        if($request->ajax()) {
+            $output = "";
 
+            $showCompleted = $request->input('completed');
+            $tasks = Task::query();
+
+            if ($showCompleted) {
+                $tasks->where('is_completed', true);
+                $output = "We have <strong>" . $tasks->count() . "</strong> finished tasks.";
+            }
+
+            $tasks = $tasks->get();
+            $projects = Project::all();
+
+        }
+        return Response($output);
+    }
 
     private function rearrangePriority($validatedData, $task) {
         $oldPriority = $task->priority;
