@@ -16,8 +16,18 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
+        $projects = Project::all();
+        if (!$projects->count()) {
+            return view('projects.create');
+        }
+
         $projectId = $request->input('project_id');
         $tasks = Task::query();
+
+        if (!$tasks->count()) {
+            return view('tasks.create', compact('projects'));
+        }
+
 
         if ($request->has('completed')) {
             $tasks->where('is_completed', 1);
@@ -26,7 +36,6 @@ class TaskController extends Controller
             $tasks->where('project_id', $projectId);
         }
         $tasks = $tasks->orderBy('priority')->get();
-        $projects = Project::all();
 
         return view('tasks.index', compact('projects', 'tasks'));
     }
