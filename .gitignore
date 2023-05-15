@@ -4,6 +4,7 @@
 /storage/*.key
 /vendor
 /db-data
+/db-data2
 /public/images
 
 .env
