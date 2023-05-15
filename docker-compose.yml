@@ -28,7 +28,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - ./db-data:/var/lib/mysql
+      - ./db-data2:/var/lib/mysql
     networks:
       - nginx-proxy
 
@@ -48,4 +48,3 @@ networks:
     nginx-proxy:
         external:
             name: nginx-proxy
-  
